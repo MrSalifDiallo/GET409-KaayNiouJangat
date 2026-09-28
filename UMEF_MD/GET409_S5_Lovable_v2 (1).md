@@ -1,0 +1,701 @@
+<!-- Slide number: 1 -->
+
+SÉANCE 5
+Intégration MVP
+& RAG avec Dify
+Connecter votre MVP Lovable.dev aux agents S3 — Pipeline RAG no-code GreenSprint
+
+Intégration : lovable.dev ↔ Dify via webhook
+
+![preencoded.png](Image0.jpg)
+RAG : upload PDF/CSV → base de connaissances Dify
+
+![preencoded.png](Image1.jpg)
+Master GET 409 · Swiss UMEF · Campus Dakar
+
+![preencoded.png](Image2.jpg)
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+1
+
+### Notes:
+
+<!-- Slide number: 2 -->
+
+↩  RETOUR S4 & AGENDA
+Ce que vous avez livré en S4… et le programme S5
+Ancrage → Projection
+
+✅  Livrables S4 validés
+🗓️  Programme S5 (3h15)
+MVP V1 Lovable.dev déployé sur lovable.app
+
+![preencoded.png](Image0.jpg)
+00:00–00:20
+Retour S4 + Quiz flash
+00:20–00:50
+Cours : RAG & intégration webhook
+Projet Lovable public — URL lovable.app active
+
+![preencoded.png](Image1.jpg)
+00:50–01:30
+Démo live : pipeline RAG GreenSprint
+Journal de Prompts S4 (init + 3 itérations)
+01:30–01:40
+☕ Pause
+
+![preencoded.png](Image2.jpg)
+01:40–02:30
+TP guidé : RAG + intégration MVP↔Dify
+Captures desktop+mobile + Note d'itération
+
+![preencoded.png](Image3.jpg)
+02:30–03:00
+Revue inter-équipes
+03:00–03:15
+Livrables S5 & Preview S6 (démo intermédiaire)
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+2
+
+### Notes:
+
+<!-- Slide number: 3 -->
+
+⚡ QUIZ FLASH
+5 questions · 2 min · En équipe
+Réactivation S4
+
+1.  Quelle est la règle fondamentale du prompt d'itération Lovable ?
+
+2.  Quel bouton Lovable utilise-t-on pour revenir à une version précédente ?
+
+3.  Comment publier son MVP sur Lovable en 4 clics ?
+
+4.  Quelle URL lovable.app copie-t-on dans le formulaire e-Academy ?
+
+5.  Donnez les 4 éléments d'un prompt d'initialisation Lovable efficace.
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+3
+
+### Notes:
+
+<!-- Slide number: 4 -->
+
+📚 RAG — CONCEPT
+RAG : Retrieval-Augmented Generation
+L'IA répond depuis VOS documents — pas depuis ses connaissances générales
+
+Définition :
+
+![preencoded.png](Image0.jpg)
+Le RAG connecte un LLM à une base de documents. Au lieu d'halluciner, l'agent cherche d'abord dans vos PDFs/CSVs, extrait les passages pertinents, puis génère une réponse fondée sur ces données réelles.
+
+🚫  Sans RAG
+
+✅  Avec RAG
+
+🔄  Pipeline RAG
+LLM seul
+LLM + vos documents
+Comment ça marche
+→  L'agent répond depuis ses données d'entraînement
+→  L'agent lit VOS fiches marché PDF
+→  1. Upload PDF/CSV dans Dify
+→  Prix du marché : hallucinations probables
+→  Prix du jour : extraits du CSV uploadé
+→  2. Dify découpe & indexe (embeddings)
+→  Données spécifiques Niayes : inconnues
+→  Données locales : précises et fiables
+→  3. Question utilisateur → recherche vectorielle
+→  Mise à jour des données : impossible
+→  Mise à jour : ré-uploader un fichier
+→  4. Passages pertinents → LLM → réponse
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+4
+
+### Notes:
+
+<!-- Slide number: 5 -->
+
+🏗️ RAG DANS DIFY
+Construire une base de connaissances dans Dify
+3 étapes : Upload → Configuration → Connexion à l'agent
+
+1
+Créer la base de connaissances
+
+2
+Uploader vos documents
+
+3
+Configurer le chunking
+·  Dify → Knowledge → + Create knowledge
+·  Cliquer 'Import' → glisser vos fichiers
+·  Chunk size : 500 tokens (recommandé)
+·  Nommer : GreenSprint_KB_v1
+·  Fiches marché PDF + tableau prix CSV
+·  Overlap : 50 tokens (évite les coupures)
+·  Type : Text — accepte PDF, TXT, CSV, Markdown
+·  Attendre l'indexation (barre de progression)
+·  Embedding model : text-embedding-ada-002
+·  Cliquer 'Create'
+·  Vérifier : statut 'Indexed' en vert
+·  Save et indexer — 1 à 3 minutes
+
+4
+Connecter à votre agent
+
+5
+Tester la base
+·  Ouvrir votre Agent GreenSprint (S3)
+·  Knowledge → Testing (onglet)
+·  Paramètres → Knowledge → + Add
+·  Taper : 'prix tomate cerise cette semaine'
+·  Sélectionner GreenSprint_KB_v1
+·  Vérifier que les passages pertinents remontent
+·  Top K : 3 (nombre de passages utilisés)
+·  Ajuster Similarity Threshold si nécessaire
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+5
+
+### Notes:
+
+<!-- Slide number: 6 -->
+
+📄 DOCUMENTS RAG
+Quels documents mettre dans la base GreenSprint ?
+Qualité des données = Qualité des réponses de l'agent
+
+Règle fondamentale :
+L'agent ne peut répondre que ce qui est dans vos documents. Des données mal structurées = des réponses incohérentes. Préparez vos fichiers AVANT d'uploader.
+
+![preencoded.png](Image0.jpg)
+
+📊  Fiches marché
+
+📋  Catalogue produits
+
+📜  Guides pratiques
+
+⚖️  Réglementation
+Format : PDF ou Markdown
+Format : CSV ou PDF
+Format : PDF ou TXT
+Format : PDF ou TXT
+Prix hebdomadaires par légume et par zone. Ex : 'Tomate cerise - Pikine - 800 FCFA/kg - semaine 23'
+Catalogue complet des producteurs : nom, zone, légumes, disponibilité, contact.
+Fiches techniques : conservation, transport, récolte. Sources : DRDR, ISRA Sénégal.
+Normes phytosanitaires, procédures douanières, textes officiels pertinents.
+
+💡 Format tableau = meilleure indexation. 1 fiche par semaine ou par légume.
+💡 CSV bien structuré avec en-têtes claires. Dify lit les colonnes automatiquement.
+💡 Texte extrait propre (pas de scan). Découpez les longs PDFs en sections thématiques.
+💡 Attention aux PDFs scannés — Dify ne lit pas les images. Utiliser pdftotext au besoin.
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+6
+
+### Notes:
+
+<!-- Slide number: 7 -->
+
+🏗️ ARCHITECTURE INTÉGRATION
+Architecture complète GreenSprint S5
+MVP Lovable ↔ Agents Dify ↔ Base RAG
+
+⚡
+
+🔗
+
+🤖
+
+📚
+
+📄
+▶
+▶
+▶
+▶
+
+MVP LOVABLE.DEV
+WEBHOOK / API
+AGENT DIFY
+BASE RAG
+RÉPONSE
+Interface utilisateur
+Pont de communication
+Chercheur + Rédacteur
+PDF + CSV indexés
+Fiche marché générée
+
+L'utilisateur saisit sa question dans le formulaire MVP
+Lovable envoie la question au webhook Dify via une requête HTTP
+L'agent décompose la requête et interroge la base RAG
+Les passages pertinents sont extraits des documents indexés
+La fiche marché structurée est retournée à l'interface
+
+🔗  Comment créer le webhook — 3 étapes dans Dify
+Obtenir l'URL webhook
+Obtenir la clé API
+Connecter dans Lovable
+
+1
+
+2
+
+3
+Dify → votre Workflow → Publish → API Access → copier l'URL API
+Settings → API Keys → Create new secret key → copier
+Dans votre composant Lovable : fetch(url, {method:'POST', headers:{'Authorization':'Bearer [clé]'}, body: JSON.stringify({query: inputValue})})
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+7
+
+### Notes:
+
+<!-- Slide number: 8 -->
+
+🎬 DÉMO LIVE
+Démo : Pipeline RAG GreenSprint complet
+De l'upload PDF à la réponse contextuelle — 8 étapes
+Créer la base de connaissances
+Dify → Knowledge → + Create knowledge → GreenSprint_KB_v1
+
+1
+Uploader les documents
+Import → glisser 'fiche_marche_niayes.pdf' + 'prix_legumes_juin2026.csv'
+
+2
+Observer l'indexation
+Barre de progression → statut 'Indexed' → voir les chunks créés
+
+3
+Tester la base seule
+Testing → 'prix tomate cette semaine' → vérifier les passages remontés
+
+4
+Connecter à l'Agent S3
+Agent GreenSprint → Knowledge → + → GreenSprint_KB_v1 → Top K = 3
+
+5
+Tester l'agent connecté
+Chat : 'Quelle est la fiche marché du chou blanc à Niayes Nord ?' — voir la différence
+
+6
+Publier le workflow
+Workflow → Publish → API Access → copier URL et clé API
+
+7
+Connecter au MVP Lovable
+Ajouter le fetch webhook dans le formulaire MVP — tester de bout en bout
+
+8
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+8
+
+### Notes:
+
+<!-- Slide number: 9 -->
+
+🔗 WEBHOOK DÉTAIL
+Connecter Lovable.dev à Dify via webhook
+Code généré automatiquement — prompt Lovable fourni
+
+Prompt Lovable pour ajouter le webhook
+📡  Structure de la réponse Dify
+Copiez-collez ce prompt dans Lovable — il génère le code de connexion :
+
+{
+  "answer": "La tomate cerise est
+   à 800 FCFA/kg à Pikine...",
+  "metadata": {
+    "usage": { "total_tokens": 245 },
+    "retriever_resources": [
+      { "content": "...",
+        "score": 0.89 }
+    ]
+  }
+}
+
+Dans le formulaire de la page Contact ou
+Offres, ajoute un champ de question et un
+bouton "Demander à l'agent".
+
+Quand l'utilisateur clique, envoie sa
+question au webhook Dify :
+
+URL : [COLLER_URL_DIFY_ICI]
+Méthode : POST
+Header : Authorization: Bearer [CLE_API]
+Body : { "inputs": {}, "query": question,
+        "response_mode": "blocking",
+        "user": "user-greensprint" }
+
+Affiche la réponse de l'API dans une
+zone de texte sous le formulaire.
+Gère les états : chargement + erreur.
+Ce qu'on affiche dans le MVP :
+
+data.answer
+Réponse textuelle → zone résultat
+
+metadata.retriever_resources
+Sources utilisées → optionnel à afficher
+
+Gestion d'erreur
+Si status !== 200 → message 'Service indisponible'
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+9
+
+### Notes:
+
+<!-- Slide number: 10 -->
+
+💻 TP GUIDÉ
+TP Guidé — 50 minutes
+MVP V2 GreenSprint — RAG intégré
+
+🎯  Mission : Votre MVP V2 répond aux questions des utilisateurs grâce à une base de connaissances GreenSprint — prix réels, fiches produit, zones de production.
+
+Étape 1 — Préparer vos documents (10 min)
+Formater PDF/CSV selon les consignes + uploader dans Dify Knowledge
+
+Étape 2 — Créer et tester la base RAG (15 min)
+Create knowledge → Import → Indexing → Testing
+
+Étape 3 — Connecter l'agent à la base (5 min)
+Agent S3 → Knowledge → GreenSprint_KB_v1 → Top K = 3
+
+Étape 4 — Intégrer le webhook dans Lovable (15 min)
+Prompt Lovable pour ajouter le fetch webhook — tester de bout en bout
+
+Étape 5 — Valider le MVP V2 (5 min)
+Test complet : question → webhook → RAG → réponse dans l'interface
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+10
+
+### Notes:
+
+<!-- Slide number: 11 -->
+
+💻 TP — ÉTAPES 1 & 2
+Documents & Base RAG : Étapes 1 et 2
+Préparer les données → Créer la base → Indexer
+
+01
+
+02
+Préparer vos documents
+Créer la base RAG
+Format recommandé pour le CSV prix :
+Dify → onglet Knowledge (icône livre)
+
+Légume,Zone,Prix_FCFA/kg,Disponibilité,Semaine
+Tomate cerise,Pikine,800,Oui,S23-2026
+Chou blanc,Niayes Nord,350,Oui,S23-2026
+Carotte,Thiaroye,600,Non,S23-2026
++ Create knowledge → Text → Nommer : GreenSprint_KB_v1
+
+Import → glisser vos fichiers (PDF + CSV)
+
+Chunking : 500 tokens / Overlap : 50
+
+✓  Format PDF : Police lisible, texte natif (pas scan), max 10MB
+Embedding model : text-embedding-ada-002
+✓  Format CSV : En-têtes en première ligne, séparateur virgule
+
+Cliquer 'Save and Process'
+✓  Taille : < 15MB par fichier, max 20 fichiers par base
+
+✓  Langue : Français recommandé — cohérence avec les prompts
+Attendre 'Indexed' en vert ✓
+
+Testing → taper une question test
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+11
+
+### Notes:
+
+<!-- Slide number: 12 -->
+
+💻 TP — ÉTAPES 3 À 5
+Connexion & Intégration : Étapes 3 à 5
+Agent → Base · Webhook → MVP · Test complet
+
+03
+
+04
+
+05
+Connecter Agent → Base
+Webhook dans Lovable
+Valider le MVP V2
+
+Ouvrir votre Agent GreenSprint (S3)
+Ouvrir votre MVP dans Lovable.dev
+Test 1 : question sur les prix
+
+Panneau droit → Knowledge → + Add
+Copier le prompt E3-S5 (Bibliothèque)
+Test 2 : question sur la disponibilité
+
+Sélectionner GreenSprint_KB_v1
+Remplacer [URL] par l'URL Dify API
+Test 3 : question hors-base (comportement)
+
+Top K : 3 · Threshold : 0.5
+Remplacer [CLE] par votre clé API
+📸  Capture : question → réponse dans MVP
+
+Sauvegarder — tester en mode chat
+Tester : soumettre une question
+Vérifier la réponse cite les données réelles
+
+Question : 'prix tomate Niayes cette semaine ?'
+Vérifier la réponse s'affiche dans l'UI
+Capturer le schéma Dify mis à jour
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+12
+
+### Notes:
+
+<!-- Slide number: 13 -->
+
+🤝 REVUE INTER-ÉQUIPES
+Peer Review — 30 minutes
+Feedback croisé avant l'évaluation intermédiaire S6
+
+📋  Format (5 min / équipe)
+⭐  Grille feedback
+Ouvrir le MVP sur lovable.app (URL live)
+
+RAG répond correctement aux questions
+/3
+Démontrer la fonctionnalité RAG (1 question)
+
+Réponse affichée dans le MVP (UX OK)
+/3
+Présenter le schéma d'architecture mis à jour
+
+Base de connaissances bien structurée
+/2
+Recevoir 2 feedbacks de l'équipe voisine
+
+Webhook fonctionnel (pas d'erreur console)
+/2
+
+⚡  Preview S6 — ÉVALUATION INTERMÉDIAIRE (dans 1 séance)
+La grille est communiquée depuis S1 — rappel :
+
+C1 — Avancement MVP /4 pts
+App déployée, 2 features testables, interface lisible
+
+C2 — Architecture agentique /2 pts
+Agent Dify démontrable, flux intelligible, schéma présenté
+
+C3 — Clarté présentation /2 pts
+Problématique en 1 phrase, proposition de valeur claire, temps respecté
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+13
+
+### Notes:
+
+<!-- Slide number: 14 -->
+
+⚙️ FLOWISE (OPTION)
+Flowise — Pour aller plus loin
+Option avancée pour les équipes qui ont terminé le TP principal
+
+Flowise vs Dify :
+Flowise (flowiseai.com) est une alternative open-source à Dify pour construire des pipelines RAG et des agents. Plus flexible, légèrement plus technique — idéal pour les équipes à l'aise avec Dify.
+
+![preencoded.png](Image0.jpg)
+
+Critère
+
+🔵  Dify
+
+🟣  Flowise
+
+Interface
+
+Drag & drop, très guidé
+
+Drag & drop + nœuds personnalisés
+
+RAG
+
+Intégré — upload direct
+
+Vectorstores multiples (Pinecone, Chroma)
+
+Agents
+
+Types prédéfinis (4 types)
+
+Totalement personnalisable
+
+Déploiement
+
+Cloud Dify (hébergé)
+
+Self-host ou Cloud
+
+Apprentissage
+
+Faible — adapté débutants
+
+Moyenne — plus de concepts
+
+Prix
+
+Gratuit (limites) / Pro 59$/mois
+
+Open-source / gratuit auto-hébergé
+
+CONSEIL  Flowise est recommandé uniquement aux équipes ayant terminé le TP RAG Dify avec succès. Ne pas basculer à mi-séance.
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+14
+
+### Notes:
+
+<!-- Slide number: 15 -->
+
+🔧 DÉBOGAGE RAG
+Résoudre les problèmes RAG fréquents
+5 symptômes · 5 diagnostics · 5 solutions
+
+❌  La base ne s'indexe pas
+🔍  Fichier trop lourd (>15MB) ou format non supporté (scan PDF, .doc)
+✅  Convertir en PDF natif (Word → Enregistrer comme PDF). Fractionner si >10MB.
+
+❌  L'agent ignore la base RAG
+🔍  Knowledge non connectée à l'agent ou Threshold trop élevé (>0.8)
+✅  Agent → Knowledge → vérifier GreenSprint_KB_v1 connectée. Baisser Threshold à 0.5.
+
+❌  Réponses hors-sujet ou incorrectes
+🔍  Chunks trop longs ou données mal structurées dans les documents
+✅  Réduire chunk size à 300 tokens. Reformater les données en tableaux clairs.
+
+❌  Webhook renvoie une erreur 401
+🔍  Clé API expirée ou mal copiée dans Lovable
+✅  Dify → Settings → API Keys → régénérer la clé. Coller sans espaces ni guillemets.
+
+❌  La réponse ne s'affiche pas dans Lovable
+🔍  Mauvais chemin d'accès dans le JSON de réponse (data.answer vs answer)
+✅  Console F12 → inspecter la réponse API → ajuster le path dans le code Lovable.
+
+CONSEIL  Le mode 'Testing' dans Dify Knowledge est votre meilleur allié — testez la base AVANT de l'accrocher à l'agent.
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+15
+
+### Notes:
+
+<!-- Slide number: 16 -->
+
+⚖️ ÉTHIQUE RAG
+Éthique des systèmes RAG — Données & Biais
+Vos documents façonnent les réponses de l'agent
+
+📊  Qualité des sources
+⏰  Données périmées
+Un agent RAG reproduit les biais de ses documents. Si vos fiches prix ne couvrent que Dakar, l'agent ignorera les marchés de Thiès ou Saint-Louis.
+Un prix CSV de 2024 utilisé en 2026 génère de fausses réponses. L'utilisateur fait confiance à l'agent — cette confiance doit être méritée.
+Solution : diversifier géographiquement vos données. Documenter les lacunes de votre base.
+Solution : dater clairement vos documents. Mettre à jour régulièrement. Ajouter un disclaimer.
+
+🔒  Confidentialité
+💬  Transparence des limites
+Uploader les données personnelles de producteurs (nom, téléphone) dans un service cloud soulève des questions RGPD et de souveraineté des données.
+L'agent doit savoir dire 'Je ne sais pas' quand la base est insuffisante — pas inventer. Ce comportement est configurable dans le prompt système.
+Solution : anonymiser avant upload. N'uploader que des données agrégées et publiques.
+Solution : Ajouter au prompt : 'Si la réponse n'est pas dans vos documents, dis-le clairement.'
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+16
+
+### Notes:
+
+<!-- Slide number: 17 -->
+
+📦 LIVRABLES S5
+Ce que vous rendez à l'issue de S5
+À déposer sur e-Academy avant S6 — Évaluation intermédiaire
+
+L1
+MVP V2 intégré en ligne
+📎  URL dans formulaire e-Academy
+URL lovable.app du MVP avec le formulaire RAG fonctionnel. Tester la réponse avant de soumettre.
+
+30 pts
+
+L2
+Pipeline RAG opérationnel
+📎  Screenshot PNG + URL Dify workflow
+Capture écran Dify : base GreenSprint_KB_v1 indexée (statut vert) + agent connecté.
+
+30 pts
+
+L3
+Schéma d'architecture V2
+📎  Image ou PDF annoté
+Schéma mis à jour incluant : MVP Lovable → Webhook → Agent → RAG → Base de connaissances.
+
+20 pts
+
+L4
+Journal de Prompts S5
+📎  Doc partagé Notion/Google Docs
+Min. 3 prompts documentés : prompt RAG Knowledge + webhook Lovable + test de cohérence.
+
+20 pts
+
+ATTENTION  S6 = Évaluation intermédiaire sur 8 pts. Grille communiquée depuis S1. Préparez votre démo de 10 minutes ce soir.
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+17
+
+### Notes:
+
+<!-- Slide number: 18 -->
+
+« La donnée n'est pas la connaissance —
+c'est ce que l'agent fait avec elle qui crée de la valeur. »
+— Principe des systèmes RAG responsables
+
+⚡  Séance 6 — ÉVALUATION INTERMÉDIAIRE
+
+🎤
+Démo partielle MVP (10 min / équipe)
+Présenter le MVP V2 live — démo RAG fonctionnelle — répondre aux questions jury
+
+📊
+Grille officielle — 8 points
+C1 (/4 pts) MVP fonctionnel · C2 (/2 pts) Architecture Dify · C3 (/2 pts) Clarté
+
+⚖️
+Éthique IA — Note d'une page
+À remettre en S6 : biais RAG, confidentialité données, impact socio-économique
+
+🔧
+Plan B obligatoire
+Préparer une démo mockée (réponses simulées) en cas de panne API le jour J
+
+S6 : Groupe 1 → 9 juin 2026  ·  Groupe 2 → 23 juin 2026  ·  Salle identique
+
+GET 409  |  Swiss UMEF University — Campus de Dakar  |  S5
+18
+
+### Notes:
