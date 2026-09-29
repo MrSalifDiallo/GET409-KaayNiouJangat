@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KaayNioujangat — Le marché crypto expliqué simplement</title>
+    <meta
+      name="description"
+      content="Chaque matin, un résumé clair du marché crypto en français courant pour les débutants au Sénégal."
+    />
+    <script>
+      // Applique le thème avant le premier rendu pour éviter tout flash
+      (function () {
+        var saved = null;
+        try {
+          saved = localStorage.getItem("theme");
+        } catch (e) {}
+        var theme =
+          saved === "light" || saved === "dark"
+            ? saved
+            : window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches
+              ? "light"
+              : "dark";
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0f1418;
+        --bg-soft: #131b24;
+        --card: #18222d;
+        --card-2: #1c2836;
+        --line: #2d3e52;
+        --text: #edf2f9;
+        --muted: #9aaec3;
+        --primary: #7af2a2;
+        --primary-hover: #93f7b4;
+        --accent: #f2c06b;
+        --success: #7af2a2;
+        --warning: #f2c06b;
+        --danger: #ff7f95;
+        --bg-image: radial-gradient(780px 380px at 16% 0%, #233243, transparent 62%),
+          radial-gradient(680px 320px at 85% 22%, #2a2631, transparent 62%),
+          linear-gradient(170deg, #0f1418, #111923 56%, #0d131a);
+        --hero-bg: linear-gradient(145deg, #1a2532, #131c27);
+        --header-bg: #101822;
+        --on-primary: #081118;
+        --live-border: #325744;
+        --live-text: #bdf9d6;
+        --bar-bg: #111820;
+        --footer-bg: #101821;
+        --primary-text: #7af2a2;
+      }
+
+      :root[data-theme="light"] {
+        color-scheme: light;
+        --bg: #f2f5f9;
+        --bg-soft: #e9eef4;
+        --card: #ffffff;
+        --card-2: #eef2f8;
+        --line: #d5dfe9;
+        --text: #121a22;
+        --muted: #54687c;
+        --primary: #7af2a2;
+        --primary-hover: #93f7b4;
+        --accent: #f2c06b;
+        --success: #2e9e62;
+        --warning: #c68a1f;
+        --danger: #d64363;
+        --bg-image: radial-gradient(780px 380px at 16% 0%, #c9d8e7, transparent 62%),
+          radial-gradient(680px 320px at 85% 22%, #dcd8e6, transparent 62%),
+          linear-gradient(170deg, #f2f5f9, #edf2f7 56%, #eef3f8);
+        --hero-bg: linear-gradient(145deg, #e2eaf3, #f7fafc);
+        --header-bg: #ffffff;
+        --on-primary: #081118;
+        --live-border: #b7e2cb;
+        --live-text: #14714a;
+        --bar-bg: #e2e8ef;
+        --footer-bg: #e7edf3;
+        --primary-text: #127a4a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        color: var(--text);
+        background: var(--bg-image);
+        font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
+      }
+
+      .app {
+        min-height: 100dvh;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+      }
+
+      .wrap {
+        width: min(1120px, 100%);
+        margin: 0 auto;
+        padding: 0 16px;
+      }
+
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid var(--line);
+        background: color-mix(in srgb, var(--header-bg) 90%, transparent);
+        backdrop-filter: blur(9px);
+      }
+
+      .header-row {
+        min-height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--primary-text);
+        font-weight: 800;
+        letter-spacing: 0.01em;
+      }
+
+      .nav {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .nav button {
+        font: inherit;
+        border: 1px solid transparent;
+        color: var(--muted);
+        background: transparent;
+        border-radius: 10px;
+        padding: 8px 11px;
+        font-size: 0.92rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .nav button:hover,
+      .nav button.active {
+        color: var(--on-primary);
+        background: var(--primary);
+      }
+
+      .theme-toggle {
+        font: inherit;
+        border: 1px solid var(--line);
+        background: var(--card);
+        color: var(--text);
+        border-radius: 10px;
+        padding: 8px 10px;
+        font-size: 0.95rem;
+        cursor: pointer;
+      }
+
+      .theme-toggle:hover {
+        filter: brightness(1.06);
+      }
+
+      main {
+        padding: 16px 0 36px;
+      }
+
+      .view {
+        display: none;
+      }
+
+      .view.active {
+        display: block;
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--hero-bg);
+        padding: 22px;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(560px 220px at 20% 0%, color-mix(in srgb, var(--primary) 16%, transparent), transparent),
+          radial-gradient(440px 200px at 85% 20%, color-mix(in srgb, var(--accent) 14%, transparent), transparent);
+        pointer-events: none;
+      }
+
+      .hero > * {
+        position: relative;
+      }
+
+      .live-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--live-border);
+        background: color-mix(in srgb, var(--card) 88%, transparent);
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 0.82rem;
+        color: var(--live-text);
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--success);
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--success) 75%, transparent);
+        animation: live-pulse 1.7s ease-out infinite;
+      }
+
+      @keyframes live-pulse {
+        to {
+          box-shadow: 0 0 0 12px transparent;
+        }
+      }
+
+      h1 {
+        margin: 14px 0 0;
+        font-size: clamp(2rem, 4vw, 3.8rem);
+        line-height: 1.1;
+      }
+
+      .hero p {
+        margin: 14px 0 0;
+        max-width: 72ch;
+        color: var(--muted);
+      }
+
+      .hero-cta {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .btn {
+        font: inherit;
+        border: 1px solid var(--line);
+        background: var(--card);
+        color: var(--text);
+        border-radius: 10px;
+        font-weight: 700;
+        padding: 12px 14px;
+        cursor: pointer;
+      }
+
+      .btn.primary {
+        color: var(--on-primary);
+        border-color: #2f5a44;
+        background: var(--primary);
+      }
+
+      .btn:hover {
+        filter: brightness(1.06);
+      }
+
+      :root[data-theme="light"] .btn:hover {
+        filter: brightness(0.97);
+      }
+
+      .ticker {
+        margin-top: 16px;
+        border-block: 1px solid var(--line);
+        overflow: hidden;
+        background: color-mix(in srgb, var(--bg-soft) 80%, transparent);
+      }
+
+      .ticker-track {
+        width: max-content;
+        display: flex;
+        gap: 20px;
+        padding: 10px 8px;
+        animation: ticker-scroll 30s linear infinite;
+      }
+
+      @keyframes ticker-scroll {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      .ticker-item {
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      .ticker-item strong {
+        color: var(--text);
+      }
+
+      .up {
+        color: var(--success);
+      }
+
+      .down {
+        color: var(--danger);
+      }
+
+      .cards {
+        display: grid;
+        gap: 12px;
+      }
+
+      .cards.cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .cards.cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        background: var(--card);
+        border-radius: 14px;
+        padding: 14px;
+      }
+
+      .card h2,
+      .card h3,
+      .card h4,
+      .card p {
+        margin: 0;
+      }
+
+      .metric {
+        margin-top: 6px;
+        font-weight: 800;
+        font-size: 1.6rem;
+      }
+
+      .sub {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.5;
+      }
+
+      .section {
+        margin-top: 18px;
+      }
+
+      .section-title {
+        font-size: 1.55rem;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .stack {
+        display: grid;
+        gap: 12px;
+      }
+
+      .control-row {
+        margin-top: 12px;
+        display: grid;
+        gap: 10px;
+        grid-template-columns: 1fr auto auto;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        background: var(--card-2);
+        color: var(--text);
+        font: inherit;
+        padding: 11px 12px;
+      }
+
+      .signal-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .pill {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        font-size: 0.75rem;
+        color: var(--muted);
+        padding: 5px 9px;
+      }
+
+      .pill.live {
+        border-color: var(--live-border);
+        color: var(--live-text);
+      }
+
+      .bar {
+        margin-top: 8px;
+        height: 6px;
+        border-radius: 999px;
+        background: var(--bar-bg);
+        overflow: hidden;
+      }
+
+      .bar > i {
+        display: block;
+        height: 100%;
+        background: var(--accent);
+      }
+
+      .note {
+        border: 1px dashed var(--line);
+        border-radius: 10px;
+        padding: 10px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .footer {
+        border-top: 1px solid var(--line);
+        background: var(--footer-bg);
+      }
+
+      .footer .wrap {
+        padding-block: 16px;
+        font-size: 0.87rem;
+        color: var(--muted);
+      }
+
+      .footer strong {
+        color: var(--text);
+      }
+
+      @media (max-width: 920px) {
+        .cards.cols-3 {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .control-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .cards.cols-3,
+        .cards.cols-2 {
+          grid-template-columns: 1fr;
+        }
+
+        .header-row {
+          align-items: flex-start;
+          flex-direction: column;
+          padding-block: 10px;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .wrap {
+          padding-inline: 12px;
+        }
+
+        .hero {
+          padding: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <div class="wrap header-row">
+          <div class="brand"><span aria-hidden="true">📈</span><span>KaayNioujangat</span></div>
+          <nav class="nav" aria-label="Navigation principale">
+            <button class="active" data-view="accueil">Accueil</button>
+            <button data-view="resume">Résumé du Jour</button>
+            <button data-view="signaux">Signaux du Jour</button>
+            <button data-view="offres">Offres</button>
+            <button data-view="contact">Contact</button>
+          </nav>
+          <button id="theme-toggle" type="button" aria-label="Changer de thème">☀️</button>
+        </div>
+      </header>
+
+      <main>
+        <div class="wrap">
+          <section class="view active" id="view-accueil">
+            <article class="hero">
+              <span class="live-badge"><span class="dot" aria-hidden="true"></span>Marché suivi en direct</span>
+              <h1>Le marché crypto, <span style="color: var(--primary-text)">expliqué simplement</span></h1>
+              <p>
+                Chaque matin, un résumé clair en français courant. Sans jargon,
+                sans groupes WhatsApp douteux. Juste ce qu'il faut pour comprendre.
+              </p>
+              <div class="hero-cta">
+                <button class="btn primary" data-open="resume">Lire le résumé du jour</button>
+                <button class="btn" data-open="signaux">Voir les signaux</button>
+              </div>
+            </article>
+
+            <div class="ticker" aria-label="Ticker des actifs suivis">
+              <div class="ticker-track" id="ticker-track"></div>
+            </div>
+
+            <section class="section cards cols-3" id="stats-cards"></section>
+
+            <section class="section card">
+              <h2 class="section-title">Comment ça marche</h2>
+              <div class="cards cols-3" style="margin-top: 12px" id="steps-cards"></div>
+            </section>
+          </section>
+
+          <section class="view" id="view-resume">
+            <article class="card stack">
+              <h2 class="section-title">Le marché ce matin</h2>
+              <p class="muted" id="resume-date"></p>
+              <p class="muted" id="resume-status">Chargement des prix réels…</p>
+              <section class="cards cols-3" id="resume-highlights"></section>
+              <section class="stack" id="resume-points"></section>
+            </article>
+          </section>
+
+          <section class="view" id="view-signaux">
+            <article class="card stack">
+              <h2 class="section-title">Signaux du jour</h2>
+              <p class="muted">Prix en FCFA. Ceci n'est pas un conseil financier.</p>
+              <div class="control-row">
+                <input id="search" type="search" placeholder="Rechercher une crypto…" />
+                <select id="filter">
+                  <option value="TOUS">Tous</option>
+                  <option value="BULL">BULL</option>
+                  <option value="BEAR">BEAR</option>
+                  <option value="NEUTRAL">NEUTRAL</option>
+                  <option value="N/A">N/A</option>
+                </select>
+                <select id="sort">
+                  <option value="none">Tri prix</option>
+                  <option value="asc">Prix ↑</option>
+                  <option value="desc">Prix ↓</option>
+                </select>
+              </div>
+              <section class="cards cols-3" id="signals-grid"></section>
+            </article>
+          </section>
+
+          <section class="view" id="view-offres">
+            <article class="card stack">
+              <h2 class="section-title">Consulter l’agent</h2>
+              <p class="muted">
+                Une question sur les prix ou les disponibilités ? Écrivez-la simplement.
+                Cette version HTML garde les clés secrètes côté serveur.
+              </p>
+              <form id="offers-form" class="stack">
+                <textarea id="offers-question" rows="5" maxlength="600" placeholder="Posez votre question sur les prix et disponibilités..."></textarea>
+                <button class="btn primary" type="submit">Demander à l’agent 🌿</button>
+              </form>
+              <p class="note" id="offers-result">L’endpoint attendu est /api/offres-agent (POST JSON: { question }).</p>
+            </article>
+          </section>
+
+          <section class="view" id="view-contact">
+            <article class="card stack">
+              <h2 class="section-title">Contact</h2>
+              <p class="muted">Une question ? Écris-nous, on répond en français simple.</p>
+              <form id="contact-form" class="stack">
+                <input required placeholder="Nom complet" />
+                <input required type="email" placeholder="E-mail" />
+                <input type="tel" placeholder="Téléphone" />
+                <textarea required rows="5" placeholder="Message"></textarea>
+                <button class="btn primary" type="submit">Envoyer</button>
+              </form>
+              <p class="note" id="contact-result">Avenue Cheikh Anta Diop, Dakar, Sénégal</p>
+            </article>
+          </section>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <div class="wrap">
+          <p><strong>📈 KaayNioujangat</strong></p>
+          <p>⚠️ Ceci n'est pas un conseil financier. Les informations publiées sont éducatives : tu décides toi-même.</p>
+          <p>Mentions légales · Avenue Cheikh Anta Diop, Dakar, Sénégal · Contact : contact@kaaynioujangat.sn</p>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const signauxFallback = [
+        { nom: "Bitcoin", symbole: "BTC", prix: 69500000, variation24h: 2.4, signal: "BULL", confiance: 78, disponible: true },
+        { nom: "Ethereum", symbole: "ETH", prix: 3420000, variation24h: 1.1, signal: "BULL", confiance: 64, disponible: true },
+        { nom: "BNB", symbole: "BNB", prix: 548000, variation24h: 0.2, signal: "NEUTRAL", confiance: 51, disponible: true },
+        { nom: "Solana", symbole: "SOL", prix: 117500, variation24h: -1.8, signal: "BEAR", confiance: 60, disponible: true },
+        { nom: "XRP", symbole: "XRP", prix: 1485, variation24h: -0.9, signal: "BEAR", confiance: 57, disponible: true },
+        { nom: "Dogecoin", symbole: "DOGE", prix: 146, variation24h: null, signal: "N/A", confiance: null, disponible: false },
+      ];
+
+      const stats = [
+        { valeur: "4,2 M", texte: "de Sénégalais suivent le marché crypto" },
+        { valeur: "65 %", texte: "des débutants dépendent de signaux WhatsApp non vérifiés" },
+        { valeur: "3 min", texte: "par jour suffisent pour comprendre le marché" },
+      ];
+
+      const etapes = [
+        { n: "1", titre: "Le résumé du matin", texte: "Chaque matin, une carte courte t'explique ce qui s'est passé sur le marché." },
+        { n: "2", titre: "Les signaux clairs", texte: "Prix en FCFA, tendance et niveau de confiance affiché sans jargon." },
+        { n: "3", titre: "Tu décides toi-même", texte: "On t'informe, on ne te dit jamais quoi acheter. La décision reste la tienne." },
+      ];
+
+      const state = { signaux: [...signauxFallback], status: "Données de démonstration" };
+
+      const formatFCFA = (n) =>
+        new Intl.NumberFormat("fr-FR").format(Math.round(n)).replace(/\u202f/g, " ") + " FCFA";
+
+      function setView(view) {
+        document.querySelectorAll(".view").forEach((el) => {
+          el.classList.toggle("active", el.id === "view-" + view);
+        });
+        document.querySelectorAll(".nav button").forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.view === view);
+        });
+      }
+
+      function bindNav() {
+        document.querySelectorAll(".nav button").forEach((btn) => {
+          btn.addEventListener("click", () => setView(btn.dataset.view));
+        });
+        document.querySelectorAll("[data-open]").forEach((btn) => {
+          btn.addEventListener("click", () => setView(btn.dataset.open));
+        });
+      }
+
+      function renderHome() {
+        document.getElementById("stats-cards").innerHTML = stats
+          .map((s) => `<article class="card"><p class="metric">${s.valeur}</p><p class="sub">${s.texte}</p></article>`)
+          .join("");
+
+        document.getElementById("steps-cards").innerHTML = etapes
+          .map(
+            (e) =>
+              `<article class="card"><span class="pill live">${e.n}</span><h4 style="margin-top:10px">${e.titre}</h4><p class="sub">${e.texte}</p></article>`,
+          )
+          .join("");
+      }
+
+      function renderTicker() {
+        const row = state.signaux.map((s) => {
+          const varTxt =
+            s.variation24h === null
+              ? ""
+              : `<span class="${s.variation24h >= 0 ? "up" : "down"}">${s.variation24h >= 0 ? "▲" : "▼"} ${Math.abs(s.variation24h).toFixed(1)} %</span>`;
+          return `<span class="ticker-item"><strong>${s.symbole}</strong> ${formatFCFA(s.prix)} ${varTxt}</span>`;
+        });
+        document.getElementById("ticker-track").innerHTML = [...row, ...row].join("");
+      }
+
+      function renderResume() {
+        const date = new Date().toLocaleDateString("fr-FR", {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        });
+        document.getElementById("resume-date").textContent = date;
+        document.getElementById("resume-status").textContent = state.status;
+
+        const actifs = state.signaux.filter((s) => s.variation24h !== null);
+        const sorted = [...actifs].sort((a, b) => b.variation24h - a.variation24h);
+        const winner = sorted[0];
+        const loser = sorted[sorted.length - 1];
+        const avg = actifs.length
+          ? actifs.reduce((sum, item) => sum + item.variation24h, 0) / actifs.length
+          : 0;
+        const rising = actifs.filter((item) => item.variation24h > 0).length;
+        const mood = avg > 1 ? "Dynamique positive" : avg < -1 ? "Marché sous pression" : "Marché partagé";
+
+        document.getElementById("resume-highlights").innerHTML = [
+          `<article class="card"><p class="muted">Lecture du marché</p><p class="metric">${mood}</p><p class="sub">Variation moyenne 24 h: <strong class="${avg >= 0 ? "up" : "down"}">${avg >= 0 ? "+" : ""}${avg.toFixed(2)} %</strong></p></article>`,
+          winner
+            ? `<article class="card"><p class="muted">Meilleure progression</p><p class="metric">${winner.symbole}</p><p class="up">+${winner.variation24h.toFixed(2)} %</p></article>`
+            : "",
+          loser
+            ? `<article class="card"><p class="muted">Plus fort recul</p><p class="metric">${loser.symbole}</p><p class="down">${loser.variation24h.toFixed(2)} %</p></article>`
+            : "",
+        ].join("");
+
+        const points = [
+          {
+            titre: "Ce qui bouge",
+            texte:
+              winner && loser
+                ? `${winner.symbole} mène la hausse à ${winner.variation24h.toFixed(2)} %, tandis que ${loser.symbole} recule de ${Math.abs(loser.variation24h).toFixed(2)} % sur 24 heures.`
+                : "Les données sont en cours de chargement.",
+          },
+          {
+            titre: "Comment le comprendre",
+            texte: `${rising} cryptos sur ${actifs.length} progressent. Une seule journée ne suffit pas pour confirmer une tendance : compare aussi les volumes et plusieurs jours.`,
+          },
+          {
+            titre: "À surveiller aujourd’hui",
+            texte: "Observe si Bitcoin conserve sa direction et si les autres grandes cryptos suivent. Une hausse isolée est moins solide qu’un mouvement partagé.",
+          },
+        ];
+
+        document.getElementById("resume-points").innerHTML = points
+          .map((p) => `<article class="card"><h4>${p.titre}</h4><p class="sub">${p.texte}</p></article>`)
+          .join("");
+      }
+
+      function renderSignaux() {
+        const q = document.getElementById("search").value.trim().toLowerCase();
+        const filtre = document.getElementById("filter").value;
+        const tri = document.getElementById("sort").value;
+
+        let list = state.signaux.filter((s) => {
+          const matchQ = !q || s.nom.toLowerCase().includes(q) || s.symbole.toLowerCase().includes(q);
+          const matchF = filtre === "TOUS" || s.signal === filtre;
+          return matchQ && matchF;
+        });
+
+        if (tri === "asc") list.sort((a, b) => a.prix - b.prix);
+        if (tri === "desc") list.sort((a, b) => b.prix - a.prix);
+
+        const grid = document.getElementById("signals-grid");
+        grid.innerHTML = list
+          .map((s) => {
+            const variation =
+              s.variation24h === null
+                ? `<span class="muted">N/A</span>`
+                : `<span class="${s.variation24h >= 0 ? "up" : "down"}">${s.variation24h >= 0 ? "▲" : "▼"} ${Math.abs(s.variation24h).toFixed(1)} %</span>`;
+
+            const confTxt = s.confiance === null ? "Données insuffisantes" : `confiance ${s.confiance} %`;
+
+            return `
+              <article class="card">
+                <div class="signal-top">
+                  <h4>${s.nom} <span class="muted">(${s.symbole})</span></h4>
+                  <span class="pill ${s.disponible ? "live" : ""}">${s.disponible ? "Disponible" : "Indisponible"}</span>
+                </div>
+                <p class="metric">${formatFCFA(s.prix)}</p>
+                <p>${variation}</p>
+                <p class="sub">● ${s.signal} · ${confTxt}</p>
+                <div class="bar"><i style="width:${s.confiance || 0}%"></i></div>
+              </article>
+            `;
+          })
+          .join("");
+
+        if (!list.length) {
+          grid.innerHTML = `<p class="muted">Aucune crypto ne correspond à ta recherche.</p>`;
+        }
+      }
+
+      function bindFilters() {
+        ["search", "filter", "sort"].forEach((id) => {
+          const el = document.getElementById(id);
+          el.addEventListener("input", renderSignaux);
+          el.addEventListener("change", renderSignaux);
+        });
+      }
+
+      function bindForms() {
+        document.getElementById("contact-form").addEventListener("submit", (event) => {
+          event.preventDefault();
+          document.getElementById("contact-result").textContent =
+            "Merci ! Ton message a bien été pris en compte.";
+        });
+
+        document.getElementById("offers-form").addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const input = document.getElementById("offers-question");
+          const result = document.getElementById("offers-result");
+          const question = input.value.trim();
+
+          if (question.length < 3) {
+            result.textContent = "Écrivez une question un peu plus précise.";
+            return;
+          }
+
+          result.textContent = "L’agent réfléchit…";
+
+          try {
+            const response = await fetch("/api/offres-agent", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ question }),
+            });
+            if (!response.ok) throw new Error("Réponse HTTP invalide");
+            const data = await response.json();
+            result.textContent = data && data.answer ? data.answer : "Réponse vide de l’agent.";
+          } catch {
+            result.textContent =
+              "Endpoint /api/offres-agent indisponible. Branche ton backend pour utiliser l’agent IA sans exposer de clé API côté client.";
+          }
+        });
+      }
+
+      async function loadLiveMarket() {
+        try {
+          const symbols = ["BTCUSDT", "ETHUSDT", "BNBUSDT", "SOLUSDT", "XRPUSDT", "DOGEUSDT"];
+          const [tickerRes, rateRes] = await Promise.all([
+            fetch("https://api.binance.com/api/v3/ticker/24hr?symbols=" + encodeURIComponent(JSON.stringify(symbols))),
+            fetch("https://open.er-api.com/v6/latest/USD"),
+          ]);
+          if (!tickerRes.ok || !rateRes.ok) throw new Error("Remote API unavailable");
+
+          const ticker = await tickerRes.json();
+          const rates = await rateRes.json();
+          const xof = rates && rates.rates && rates.rates.XOF ? rates.rates.XOF : null;
+          if (!xof) throw new Error("Missing XOF rate");
+
+          state.signaux = state.signaux.map((s) => {
+            const live = ticker.find((row) => row.symbol === s.symbole + "USDT");
+            if (!live) return s;
+            return {
+              ...s,
+              prix: Number(live.lastPrice) * xof,
+              variation24h: Number(live.priceChangePercent),
+            };
+          });
+
+          state.status = "Marché actualisé · source Binance";
+        } catch {
+          state.status = "Les prix en direct sont momentanément indisponibles. Données de démonstration affichées.";
+        }
+      }
+
+      function applyTheme(theme) {
+        document.documentElement.dataset.theme = theme;
+        const btn = document.getElementById("theme-toggle");
+        if (!btn) return;
+        btn.textContent = theme === "light" ? "🌙" : "☀️";
+        btn.setAttribute("aria-label", theme === "light" ? "Basculer en thème sombre" : "Basculer en thème clair");
+      }
+
+      function bindTheme() {
+        applyTheme(document.documentElement.dataset.theme || "dark");
+        document.getElementById("theme-toggle").addEventListener("click", () => {
+          const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+          try {
+            localStorage.setItem("theme", next);
+          } catch (e) {}
+          applyTheme(next);
+        });
+        // Suivre le thème du système seulement si aucun choix manuel n'est enregistré
+        const mq = window.matchMedia("(prefers-color-scheme: light)");
+        mq.addEventListener("change", (e) => {
+          let saved = null;
+          try {
+            saved = localStorage.getItem("theme");
+          } catch (err) {}
+          if (!saved) applyTheme(e.matches ? "light" : "dark");
+        });
+      }
+
+      async function bootstrap() {
+        bindTheme();
+        bindNav();
+        bindFilters();
+        bindForms();
+        renderHome();
+        await loadLiveMarket();
+        renderTicker();
+        renderResume();
+        renderSignaux();
+      }
+
+      bootstrap();
+    </script>
+  </body>
+</html>
