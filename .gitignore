@@ -19,3 +19,6 @@ venv/
 .DS_Store
 .vscode/
 .idea/
+
+# Supports de cours UMEF : ne jamais committer
+UMEF_MD/
