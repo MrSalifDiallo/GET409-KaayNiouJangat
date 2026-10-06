@@ -1,0 +1,28 @@
+﻿**Plan (aucune modification faite pour l'instant)**
+
+1. **Cause suspectée** : `.app` (l. 96) est un `display: grid` avec seulement `grid-template-rows`. Sa colonne implicite est donc `auto`, dimensionnée sur le min-content de ses enfants. `.ticker-track` (l. 287) a `width: max-content`, soit environ 2234px une fois la liste dupliquée. `overflow: hidden` sur `.ticker` ne protège pas les ancêtres de la grille. La colonne s'élargit donc à 2234px, et `<header>` et `<main>` avec elle. Cela correspond à la mesure du header.
+
+2. **Confirmer avant de corriger** (DevTools, 360px). Ces deux vérifications se font dans la console, sans toucher au fichier :
+   - `getComputedStyle(document.querySelector('.app')).gridTemplateColumns` doit renvoyer ≈ `2234px`.
+   - Appliquer à chaud `document.querySelector('.app').style.gridTemplateColumns='minmax(0,1fr)'` : `scrollWidth` doit retomber à 360.
+
+3. **Changement CSS exact**, dans `.app` uniquement :
+   ```css
+   grid-template-columns: minmax(0, 1fr);
+   ```
+   Si un enfant garde un `min-width: auto` gênant après ce test, j'ajoute `.app > * { min-width: 0; }`.
+
+4. **Pourquoi le desktop ne bouge pas** : `.wrap` est déjà plafonné à `min(1120px, 100%)`. À 1280px, la colonne `1fr` vaut 1280px, comme la colonne `auto` aujourd'hui. Le ticker, le thème et le JS ne sont pas touchés (l'animation reste, seule la colonne est contrainte).
+
+5. **Test à 360px** :
+   - `document.documentElement.scrollWidth === 360`.
+   - Le header fait 360px de large.
+   - Le bouton thème est visible et fonctionne dans les deux thèmes.
+   - Le ticker défile toujours, clippé par `.ticker`.
+   - Je navigue dans les 5 vues (Accueil, Résumé, Signaux, Offres, Contact) pour vérifier qu'aucune ne déborde.
+
+6. **Test à 1280px** : captures avant/après de la vue d'accueil, qui doivent être identiques. Je compare aussi la largeur de `.wrap` (1120px) et la position du header.
+
+7. **Si l'hypothèse est fausse** : je cherche l'élément qui dépasse avec `[...document.querySelectorAll('*')].filter(e=>e.getBoundingClientRect().right>360)`, puis je corrige à ce niveau.
+
+Le plan est aussi enregistré dans `C:\Users\Lenovo\.claude\plans\context-kaaynioujangat-html-html-overflo-fluffy-goose.md`. J'attends ton accord avant de modifier `kaaynioujangat-html.html`.

@@ -1,0 +1,7 @@
+Je ne peux pas encore commencer. Je n'ai pas pu lire `../v1-no-skill/index.html`, parce que l'accès à ce dossier m'a été refusé. Or tout dépend de ce fichier : les sections, le texte français et les chiffres à reprendre tels quels. Sans lui, je devrais inventer le contenu, ce que vos contraintes interdisent.
+
+Deux options :
+1. **Vous autorisez la lecture** de `C:\Users\Lenovo\claude-lab\03-landing\v1-no-skill\index.html`. Je relance la lecture, puis je construis `index.html` dans `v2-skill`.
+2. **Vous collez le contenu de v1** ici (ou au moins les sections, les textes et les chiffres). Je pars de là.
+
+Une fois le contenu en main, je livre le fichier et les 5 lignes d'explication de la direction artistique (typographie, palette, mise en page, mouvement, détail signature).

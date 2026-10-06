@@ -1,0 +1,14 @@
+I rebuilt `index.html` from scratch with the same sections, French copy and form logic as v1, and no invented figures. I haven't opened it in a browser, so the 360px check is still to do. It's built mobile-first, and the rules to hold it at 360px are in the CSS.
+
+**Art direction**
+1. **Typography:** Headlines are in Palatino, a warm, steady book serif, set large with tight tracking. Body text and the form use system sans. The serif reads as trustworthy, and the sans keeps the text easy to read.
+2. **Palette:** It's the Atlantic at dusk (`#0c2b33`) against whitewashed Gorée walls (`#dfe9e5`). Your green `#7af2a2` is used for actions and your amber `#f2c06b` for the sun and the warnings. It avoids both the cream-and-terracotta look and the black-with-acid-green look.
+3. **Layout:** The hero is left-aligned over a sea horizon. "Comment ça marche" is a dashed fishing-line sequence of three steps. "Signaux du jour" is a slate-style table of rows instead of identical cards. The two offers have different weights, with "Approfondi" shown dark.
+4. **Motion:** On load the amber sun rises once, and two slow waves drift behind the hero. Nothing else moves on its own. Under `prefers-reduced-motion`, the waves and sun animation, the button transition and smooth scrolling are all turned off.
+5. **Signature detail:** A band of painted pirogue strakes (green, amber, white, with rivet marks) separates the hero from the content and closes the page above the footer.
+
+Contrast and accessibility:
+- The green is only used as a fill with dark text, because it is too pale on light backgrounds.
+- Targets are at least 44px.
+- Focus rings are visible.
+- The demo-data badges are kept.

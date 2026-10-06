@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KaayNioujangat – Le marché crypto, expliqué simplement</title>
+<meta name="description" content="Un résumé quotidien du marché crypto, en français simple, pour les débutants au Sénégal.">
+<style>
+  :root{
+    --mer:#0c2b33;        /* Atlantique, la nuit */
+    --mer-2:#133b45;
+    --mur:#dfe9e5;        /* mur chaulé de Gorée */
+    --mur-2:#cfdcd7;
+    --papier:#f4f8f6;
+    --ink:#10292c;
+    --muted:#4a6265;
+    --vert:#7af2a2;
+    --ambre:#f2c06b;
+    --vert-d:#0a5a40;     /* vert lisible sur fond clair */
+    --err:#a8231b;
+    --serif:"Palatino Linotype",Palatino,"Book Antiqua","Iowan Old Style",Georgia,serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font:1rem/1.65 var(--sans);color:var(--ink);background:var(--papier);overflow-wrap:break-word}
+  img,svg{max-width:100%;display:block}
+  a{color:var(--vert-d)}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 1.1rem}
+  h1,h2,h3{font-family:var(--serif);line-height:1.12;margin:0 0 .75rem;letter-spacing:-.01em}
+  h1{font-size:clamp(2.3rem,10.5vw,4.6rem);font-weight:700}
+  h2{font-size:clamp(1.8rem,7vw,2.6rem);font-weight:700}
+  h3{font-size:1.25rem;font-weight:700}
+  .lead{font-size:1.1rem;color:var(--muted);max-width:56ch}
+  .note{font-size:.88rem;color:var(--muted)}
+  .sec{padding:3.5rem 0}
+
+  /* bandeau d'avertissement */
+  .disclaimer-bar{background:var(--ambre);color:#2b1f05;text-align:center;font-size:.9rem;padding:.5rem 1rem;font-weight:700}
+
+  /* en-tête sur la mer */
+  .dark{background:var(--mer);color:#e8f1ee}
+  header.top .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.25rem 1.25rem;padding-top:.9rem;padding-bottom:.9rem}
+  .logo{font:700 1.3rem var(--serif);color:#fff;text-decoration:none}
+  .logo span{color:var(--vert)}
+  nav{display:flex;flex-wrap:wrap;gap:.1rem 1.1rem;font-size:.95rem}
+  nav a{color:#cfe0db;text-decoration:none;padding:.5rem 0;min-height:44px;display:inline-flex;align-items:center}
+  nav a:hover{color:var(--vert)}
+
+  /* hero */
+  .hero{position:relative;overflow:hidden;padding:3.5rem 0 0}
+  .hero .wrap{position:relative;z-index:1}
+  .hero h1{max-width:13ch;color:#fff}
+  .hero .lead{color:#c3d6d1}
+  .sun{position:absolute;right:-70px;top:60px;width:min(46vw,300px);aspect-ratio:1;border-radius:50%;background:var(--ambre);opacity:.9}
+  .cta{display:flex;flex-wrap:wrap;gap:.75rem;margin:1.75rem 0 1.25rem}
+  .btn{display:inline-flex;align-items:center;justify-content:center;background:var(--vert);color:#06241a;border:2px solid var(--vert);border-radius:999px;padding:.7rem 1.4rem;font:inherit;font-weight:700;text-decoration:none;cursor:pointer;min-height:48px;transition:background .2s,transform .2s}
+  .btn:hover{background:#98f6b8}
+  .btn:active{transform:translateY(1px)}
+  .btn.alt{background:transparent;color:inherit;border-color:currentColor}
+  .btn.alt:hover{background:rgba(255,255,255,.1)}
+  .hero .note{color:#a9c2bc;max-width:52ch}
+  .hero .note strong{color:#fff}
+  .waves{margin-top:2.5rem;height:90px;overflow:hidden;position:relative}
+  .waves svg{position:absolute;left:0;bottom:0;width:200%;height:100%;max-width:none}
+  .waves .w1{animation:drift 26s linear infinite}
+  .waves .w2{animation:drift 40s linear infinite reverse;opacity:.6}
+  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* signature : les virures peintes d'une pirogue */
+  .pirogue{height:22px;background:
+    linear-gradient(var(--vert) 0 33%,var(--ambre) 33% 66%,#e9f1ee 66% 100%);
+    position:relative}
+  .pirogue::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 46px,rgba(12,43,51,.9) 46px 50px)}
+
+  /* comment ça marche : un fil, comme une ligne de pêche */
+  .steps{list-style:none;margin:2rem 0 0;padding:0;display:grid;gap:0;position:relative}
+  .steps li{display:grid;grid-template-columns:3rem 1fr;gap:0 1rem;padding-bottom:1.75rem;position:relative}
+  .steps li:not(:last-child)::before{content:"";position:absolute;left:1.5rem;top:3rem;bottom:.25rem;border-left:2px dashed #8fa9a3;transform:translateX(-1px)}
+  .steps .num{width:3rem;height:3rem;border-radius:50%;background:var(--mer);color:var(--vert);font:700 1.3rem var(--serif);display:grid;place-items:center}
+  .steps p{margin:0;max-width:52ch;color:var(--muted)}
+  .steps h3{margin-top:.55rem}
+  @media(min-width:760px){
+    .steps{grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    .steps li{grid-template-columns:1fr;padding-bottom:0}
+    .steps li:not(:last-child)::before{left:3.5rem;right:-1.5rem;top:1.5rem;bottom:auto;border-left:0;border-top:2px dashed #8fa9a3;transform:none}
+    .steps .num{margin-bottom:.9rem}
+    .steps h3{margin-top:0}
+  }
+
+  /* signaux : l'ardoise du marché */
+  .signaux{background:var(--mur)}
+  .board{margin:1.75rem 0 0;padding:0;list-style:none;border-top:2px solid var(--ink)}
+  .board li{display:grid;gap:.15rem 1rem;padding:1rem 0;border-bottom:1px solid #9db3ad}
+  .board h3{margin:0;font-size:1.15rem}
+  .board .val{font:700 1.5rem var(--serif);color:var(--muted);letter-spacing:.15em}
+  .board p{margin:0;font-size:.95rem;color:var(--muted)}
+  .badge{display:inline-block;font-size:.75rem;font-weight:700;background:var(--ambre);color:#2b1f05;border-radius:4px;padding:.1rem .5rem;margin-top:.35rem}
+  @media(min-width:760px){
+    .board li{grid-template-columns:minmax(0,1.1fr) 9rem minmax(0,1.6fr);align-items:center}
+    .board .badge{display:none}
+  }
+  @media(max-width:759px){.board .val{order:2}}
+
+  /* offres */
+  .offers{display:grid;gap:1.25rem;margin-top:1.75rem;align-items:start}
+  @media(min-width:760px){.offers{grid-template-columns:1fr 1.15fr}}
+  .offer{border:2px solid var(--ink);border-radius:18px 18px 18px 4px;padding:1.5rem;background:var(--papier)}
+  .offer.featured{background:var(--mer);color:#e8f1ee;border-color:var(--mer)}
+  .offer.featured .price small{color:#b6cdc7}
+  .price{font:700 2rem var(--serif);margin:.25rem 0 1rem}
+  .price small{font:500 .9rem var(--sans);color:var(--muted)}
+  .offer ul{padding-left:1.2rem;margin:0 0 1.5rem}
+  .offer li{margin-bottom:.35rem}
+  .offer .btn.alt{color:var(--ink)}
+  .offer .btn.alt:hover{background:var(--mur)}
+  .offer.featured .btn.alt{color:inherit}
+
+  /* contact */
+  .contact{background:var(--mur)}
+  form{display:grid;gap:1.1rem;max-width:560px;margin-top:1.75rem}
+  label{display:block;font-weight:700;margin-bottom:.25rem}
+  input,select,textarea{width:100%;font:inherit;padding:.7rem .8rem;border:1.5px solid #5d7a74;border-radius:8px;background:#fff;color:var(--ink);min-height:48px}
+  input:focus,select:focus,textarea:focus,.btn:focus-visible,a:focus-visible{outline:3px solid var(--ambre);outline-offset:2px}
+  .dark a:focus-visible,.dark .btn:focus-visible{outline-color:var(--vert)}
+  .field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--err);border-width:2px}
+  .error{color:var(--err);font-size:.88rem;font-weight:600;margin:.25rem 0 0}
+  .check{display:flex;gap:.7rem;align-items:flex-start}
+  .check input{width:1.4rem;min-height:0;height:1.4rem;margin-top:.15rem;flex:none}
+  .check label{font-weight:400;margin:0}
+  form .btn{background:var(--mer);border-color:var(--mer);color:#fff;justify-self:start}
+  form .btn:hover{background:var(--mer-2)}
+  #success{display:none;background:var(--vert);color:#06241a;border-radius:10px;padding:1rem;margin-top:1.25rem;max-width:560px;font-weight:600}
+
+  footer{padding:2.5rem 0 2rem;font-size:.92rem;color:#b6cdc7}
+  footer strong{color:#fff}
+  footer p{max-width:62ch;margin:0 0 .75rem}
+
+  /* un seul moment d'animation à l'arrivée : le soleil se lève */
+  @media(prefers-reduced-motion:no-preference){
+    .sun{animation:rise 2.4s cubic-bezier(.2,.7,.2,1) both}
+    @keyframes rise{from{transform:translateY(90px);opacity:0}to{transform:none;opacity:.9}}
+  }
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .waves svg,.sun{animation:none!important}
+    .btn{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="disclaimer-bar" role="note">Ceci n'est pas un conseil financier.</div>
+
+<div class="dark hero" id="accueil">
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="#accueil">Kaay<span>Nioujangat</span></a>
+      <nav aria-label="Navigation principale">
+        <a href="#comment">Comment ça marche</a>
+        <a href="#signaux">Signaux du jour</a>
+        <a href="#offres">Offres</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="sun" aria-hidden="true"></div>
+  <div class="wrap" style="padding-top:3rem">
+    <h1>Le marché crypto, expliqué simplement</h1>
+    <p class="lead">Chaque jour, un résumé clair en français, sans jargon, pensé pour les débutants au Sénégal. Comprenez ce qui bouge, et pourquoi.</p>
+    <div class="cta">
+      <a class="btn" href="#contact">Recevoir le résumé</a>
+      <a class="btn alt" href="#comment">Comment ça marche</a>
+    </div>
+    <p class="note"><strong>Ceci n'est pas un conseil financier.</strong> Les cryptomonnaies sont risquées : vous pouvez perdre tout ou partie de l'argent investi.</p>
+  </div>
+
+  <div class="waves" aria-hidden="true">
+    <svg viewBox="0 0 1600 90" preserveAspectRatio="none" class="w2"><path fill="#133b45" d="M0 40 Q100 10 200 40 T400 40 T600 40 T800 40 T1000 40 T1200 40 T1400 40 T1600 40 V90 H0Z"/></svg>
+    <svg viewBox="0 0 1600 90" preserveAspectRatio="none" class="w1"><path fill="#dfe9e5" d="M0 62 Q100 38 200 62 T400 62 T600 62 T800 62 T1000 62 T1200 62 T1400 62 T1600 62 V90 H0Z"/></svg>
+  </div>
+</div>
+<div class="pirogue" aria-hidden="true"></div>
+
+<main>
+  <section class="sec" id="comment">
+    <div class="wrap">
+      <h2>Comment ça marche</h2>
+      <ol class="steps">
+        <li>
+          <span class="num" aria-hidden="true">1</span>
+          <div><h3>Vous vous inscrivez</h3>
+          <p>Laissez votre contact via le formulaire. C'est tout ce qu'il faut pour commencer.</p></div>
+        </li>
+        <li>
+          <span class="num" aria-hidden="true">2</span>
+          <div><h3>Vous lisez le résumé du jour</h3>
+          <p>Les faits marquants du marché, expliqués avec des mots simples et des exemples du quotidien.</p></div>
+        </li>
+        <li>
+          <span class="num" aria-hidden="true">3</span>
+          <div><h3>Vous comprenez, à votre rythme</h3>
+          <p>Vous apprenez le vocabulaire petit à petit et décidez par vous-même, en connaissance de cause.</p></div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec signaux" id="signaux">
+    <div class="wrap">
+      <h2>Signaux du jour</h2>
+      <p class="lead">Un aperçu de la présentation des signaux. <strong>Données de démonstration</strong> : aucune valeur ci-dessous n'est réelle.</p>
+      <ul class="board">
+        <li><div><h3>Bitcoin (BTC)</h3><span class="badge">Données de démonstration</span></div><div class="val" aria-label="valeur fictive">— — —</div><p>Ici : l'évolution du jour, en une phrase simple.</p></li>
+        <li><div><h3>Ethereum (ETH)</h3><span class="badge">Données de démonstration</span></div><div class="val" aria-label="valeur fictive">— — —</div><p>Ici : ce qui explique le mouvement, sans jargon.</p></li>
+        <li><div><h3>Humeur du marché</h3><span class="badge">Données de démonstration</span></div><div class="val" aria-label="valeur fictive">— — —</div><p>Ici : prudence, optimisme ou calme ?</p></li>
+        <li><div><h3>Plus forte hausse</h3><span class="badge">Données de démonstration</span></div><div class="val" aria-label="valeur fictive">— — —</div><p>Ici : la crypto qui a le plus progressé.</p></li>
+        <li><div><h3>Plus forte baisse</h3><span class="badge">Données de démonstration</span></div><div class="val" aria-label="valeur fictive">— — —</div><p>Ici : la crypto qui a le plus reculé.</p></li>
+        <li><div><h3>Le mot du jour</h3><span class="badge">Données de démonstration</span></div><div class="val" aria-label="valeur fictive">— — —</div><p>Ici : un terme crypto expliqué simplement.</p></li>
+      </ul>
+      <p class="note" style="margin-top:1rem">Données de démonstration. Ceci n'est pas un conseil financier.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="offres">
+    <div class="wrap">
+      <h2>Nos offres</h2>
+      <p class="lead">Tarifs d'exemple en FCFA, à confirmer avant lancement.</p>
+      <div class="offers">
+        <article class="offer">
+          <h3>Découverte</h3>
+          <p class="price">0 FCFA <small>/ mois</small></p>
+          <ul>
+            <li>Le résumé quotidien en français simple</li>
+            <li>Le mot du jour pour apprendre le vocabulaire</li>
+          </ul>
+          <a class="btn alt" href="#contact">Choisir Découverte</a>
+        </article>
+        <article class="offer featured">
+          <h3>Approfondi</h3>
+          <p class="price">1 000 FCFA <small>/ mois (exemple)</small></p>
+          <ul>
+            <li>Tout Découverte</li>
+            <li>Explications détaillées et guides pour débutants</li>
+          </ul>
+          <a class="btn" href="#contact">Choisir Approfondi</a>
+        </article>
+      </div>
+      <p class="note" style="margin-top:1.25rem">Aucune offre ne constitue un conseil financier. Ceci n'est pas un conseil financier.</p>
+    </div>
+  </section>
+
+  <section class="sec contact" id="contact">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <p class="lead">Une question ou envie de recevoir le résumé ? Écrivez-nous.</p>
+      <form id="contactForm" novalidate>
+        <div class="field">
+          <label for="nom">Nom complet</label>
+          <input id="nom" name="nom" type="text" autocomplete="name" required aria-describedby="nom-err">
+          <p class="error" id="nom-err" role="alert"></p>
+        </div>
+        <div class="field">
+          <label for="email">Adresse e-mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-err">
+          <p class="error" id="email-err" role="alert"></p>
+        </div>
+        <div class="field">
+          <label for="tel">Téléphone <span class="note">(facultatif)</span></label>
+          <input id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="ex. 77 123 45 67" aria-describedby="tel-err">
+          <p class="error" id="tel-err" role="alert"></p>
+        </div>
+        <div class="field">
+          <label for="offre">Offre souhaitée</label>
+          <select id="offre" name="offre" required aria-describedby="offre-err">
+            <option value="">Choisir…</option>
+            <option>Découverte</option>
+            <option>Approfondi</option>
+            <option>Simple question</option>
+          </select>
+          <p class="error" id="offre-err" role="alert"></p>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" required minlength="10" aria-describedby="message-err"></textarea>
+          <p class="error" id="message-err" role="alert"></p>
+        </div>
+        <div class="field">
+          <div class="check">
+            <input id="ok" name="ok" type="checkbox" required aria-describedby="ok-err">
+            <label for="ok">Je comprends que ceci n'est pas un conseil financier.</label>
+          </div>
+          <p class="error" id="ok-err" role="alert"></p>
+        </div>
+        <button class="btn" type="submit">Envoyer</button>
+        <p class="note">Validation côté navigateur uniquement : ce formulaire n'envoie aucune donnée à un serveur dans cette version.</p>
+      </form>
+      <div id="success" role="status" tabindex="-1"></div>
+    </div>
+  </section>
+</main>
+
+<div class="pirogue" aria-hidden="true"></div>
+<footer class="dark">
+  <div class="wrap">
+    <p><strong>KaayNioujangat</strong> : le résumé quotidien du marché crypto, en français simple.</p>
+    <p><strong>Ceci n'est pas un conseil financier.</strong> Les cryptomonnaies sont volatiles et risquées. Ne placez jamais d'argent que vous ne pouvez pas vous permettre de perdre.</p>
+    <p>Les signaux affichés sur cette page sont des <strong>données de démonstration</strong>.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var form = document.getElementById('contactForm');
+  var success = document.getElementById('success');
+
+  function setError(id, msg){
+    var el = document.getElementById(id);
+    el.closest('.field').classList.toggle('invalid', !!msg);
+    el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    document.getElementById(id + '-err').textContent = msg || '';
+    return !msg;
+  }
+
+  var rules = {
+    nom: function(v){ return v.trim().length < 2 ? 'Veuillez indiquer votre nom (2 caractères minimum).' : ''; },
+    email: function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'Veuillez saisir une adresse e-mail valide.'; },
+    tel: function(v){
+      v = v.trim();
+      if(!v) return '';
+      return /^\+?[0-9 .\-]{8,16}$/.test(v) ? '' : 'Numéro invalide (8 à 16 chiffres).';
+    },
+    offre: function(v){ return v ? '' : 'Veuillez choisir une option.'; },
+    message: function(v){ return v.trim().length < 10 ? 'Votre message doit contenir au moins 10 caractères.' : ''; }
+  };
+
+  function check(id){
+    if(id === 'ok'){
+      return setError('ok', document.getElementById('ok').checked ? '' : 'Veuillez cocher cette case pour continuer.');
+    }
+    return setError(id, rules[id](document.getElementById(id).value));
+  }
+
+  var ids = ['nom','email','tel','offre','message','ok'];
+  ids.forEach(function(id){
+    var el = document.getElementById(id);
+    el.addEventListener('blur', function(){ check(id); });
+    el.addEventListener('input', function(){ if(el.closest('.field').classList.contains('invalid')) check(id); });
+    el.addEventListener('change', function(){ if(el.closest('.field').classList.contains('invalid')) check(id); });
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var firstBad = null;
+    ids.forEach(function(id){
+      if(!check(id) && !firstBad) firstBad = document.getElementById(id);
+    });
+    if(firstBad){ firstBad.focus(); success.style.display = 'none'; return; }
+    success.textContent = 'Merci ' + document.getElementById('nom').value.trim() + ' ! Votre message est valide (aucun envoi réel dans cette version de démonstration).';
+    success.style.display = 'block';
+    form.reset();
+    success.focus();
+  });
+})();
+</script>
+</body>
+</html>

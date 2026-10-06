@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KaayNioujangat – Plan marketing</title>
+<style>
+  :root {
+    --bg: #faf7f0;
+    --ink: #1d2a27;
+    --muted: #55645f;
+    --teal: #0b6b5c;
+    --teal-soft: #e3f0ec;
+    --sand: #efe7d4;
+    --gold: #c99700;
+    --line: #d9d2bf;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 20px 64px; }
+  header.top { background: var(--teal); color: #fff; padding: 36px 0 28px; }
+  header.top .wrap { padding-bottom: 0; }
+  header.top h1 { margin: 0 0 6px; font-size: 1.9rem; line-height: 1.2; }
+  header.top p { margin: 0; opacity: .92; max-width: 62ch; }
+  nav.toc { background: var(--sand); border-bottom: 1px solid var(--line); }
+  nav.toc ul { list-style: none; margin: 0; padding: 10px 0; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .9rem; }
+  nav.toc a { color: var(--teal); text-decoration: none; font-weight: 600; }
+  nav.toc a:hover, nav.toc a:focus { text-decoration: underline; }
+  section { margin-top: 44px; scroll-margin-top: 12px; }
+  h2 { font-size: 1.4rem; margin: 0 0 4px; color: var(--teal); border-bottom: 3px solid var(--gold); padding-bottom: 6px; display: inline-block; }
+  h3 { font-size: 1.05rem; margin: 0 0 6px; }
+  .lead { color: var(--muted); margin: 6px 0 18px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
+  .grid { display: grid; gap: 14px; }
+  .g3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+  .g2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .note { background: var(--teal-soft); border-left: 4px solid var(--teal); padding: 12px 16px; border-radius: 6px; font-size: .94rem; }
+  .warn { background: #fff6dc; border-left: 4px solid var(--gold); padding: 12px 16px; border-radius: 6px; font-size: .94rem; }
+  blockquote.pos { margin: 0; padding: 20px 22px; background: var(--card); border: 2px solid var(--teal); border-radius: 10px; font-size: 1.08rem; }
+  blockquote.pos b { color: var(--teal); }
+  .proof { margin-top: 12px; font-size: .85rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .proof .lbl { font-weight: 700; text-transform: uppercase; letter-spacing: .04em; font-size: .75rem; }
+  .chip { display: inline-block; padding: 1px 9px; border-radius: 999px; background: var(--teal-soft); color: var(--teal); font-weight: 700; text-decoration: none; border: 1px solid #b9d8cf; }
+  .chip:hover, .chip:focus { background: var(--teal); color: #fff; }
+  .tag { display: inline-block; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: 1px 8px; border-radius: 4px; background: var(--sand); color: #6b5a1f; margin-left: 6px; vertical-align: middle; }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); font-size: .92rem; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th { background: var(--sand); font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; }
+  td ul { margin: 0; padding-left: 18px; }
+  ol.items { margin: 0; padding: 0; list-style: none; counter-reset: n; display: grid; gap: 12px; }
+  ol.items > li { counter-increment: n; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px 14px 56px; position: relative; }
+  ol.items > li::before { content: counter(n); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px; border-radius: 50%; background: var(--teal); color: #fff; font-weight: 700; display: grid; place-items: center; }
+  ol.items p { margin: 4px 0; }
+  .why { color: var(--muted); font-size: .92rem; }
+  .thumbs { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 14px; }
+  figure.th { margin: 0; width: 170px; }
+  figure.th a { display: block; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; }
+  figure.th img { display: block; width: 170px; height: 150px; object-fit: cover; object-position: top; }
+  figure.th figcaption { font-size: .78rem; color: var(--muted); margin-top: 4px; line-height: 1.35; }
+  code { background: var(--sand); padding: 1px 5px; border-radius: 4px; font-size: .88em; }
+  .copy { font-style: italic; color: #2c3b37; }
+  footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--line); font-size: .85rem; color: var(--muted); }
+  a { color: var(--teal); }
+  @media print { nav.toc { display: none; } section { break-inside: avoid-page; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <h1>KaayNioujangat – Plan marketing</h1>
+    <p>Résumé crypto quotidien, en français simple, pour les débutants au Sénégal. Plan établi le 6 octobre 2026 à partir de l'analyse concurrentielle Cryptoast / Journal du Coin.</p>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sommaire">
+  <div class="wrap">
+    <ul>
+      <li><a href="#cadre">Cadre et limites</a></li>
+      <li><a href="#positionnement">1. Positionnement</a></li>
+      <li><a href="#piliers">2. Piliers de marque</a></li>
+      <li><a href="#calendrier">3. Calendrier 4 semaines</a></li>
+      <li><a href="#landing">4. Page d'accueil (7)</a></li>
+      <li><a href="#acquisition">5. Acquisition (5)</a></li>
+      <li><a href="#quickwins">6. Gains rapides</a></li>
+      <li><a href="#suivi">Suivi</a></li>
+      <li><a href="#preuves">Index des preuves</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="cadre">
+  <h2>Cadre et limites</h2>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="note">
+      <b>Comment lire ce document.</b> Chaque recommandation renvoie à une preuve : <a class="chip" href="#ev-S1">S1</a>–<a class="chip" href="#ev-S4">S4</a> (captures), <a class="chip" href="#ev-U1">U1</a>–<a class="chip" href="#ev-U6">U6</a> (pages visitées) ou une section de <code>competitive-analysis.md</code> (<a class="chip" href="#ev-A">Analyse</a>). Les pastilles sont cliquables et mènent à l'<a href="#preuves">index des preuves</a>.
+    </div>
+    <div class="warn">
+      <b>Ce qui n'est pas connu</b> (« non observé » dans l'analyse) : trafic, taille des audiences, prix des offres externes, poids des pages sur mobile, présence réelle des lecteurs cibles sur LinkedIn ou WhatsApp, cadre légal et pratique des cryptomonnaies au Sénégal. Les connecteurs SimilarWeb et Ahrefs du plugin marketing ne sont pas autorisés dans cette session : aucune donnée de trafic n'a été utilisée. Aucun chiffre de ce plan n'est un objectif ou une prévision ; seuls figurent des chiffres relevés dans l'analyse.
+    </div>
+  </div>
+  <p class="warn" style="margin-top:14px"><b>Contenu informatif.</b> KaayNioujangat explique le marché ; il ne donne ni conseil en investissement, ni promesse de gains, ni incitation à acheter. Cette règle s'applique à toutes les publications ci-dessous.</p>
+</section>
+
+<section id="positionnement">
+  <h2>1. Énoncé de positionnement</h2>
+  <p class="lead">Un seul énoncé, construit sur le premier vide laissé par les deux concurrents : aucun ne s'adresse au Sénégal.</p>
+  <blockquote class="pos">
+    <b>Pour</b> les débutants au Sénégal qui veulent comprendre le marché crypto sans jargon,<br>
+    <b>KaayNioujangat</b> est le résumé quotidien en français simple<br>
+    <b>qui</b> explique l'essentiel en quelques lignes, avec des repères en FCFA et un ton sans pression commerciale.<br>
+    <b>Contrairement à</b> Cryptoast et Journal du Coin, rédigés pour un lecteur France/Europe (€, MiCA, PSAN, PEA) et ouvrant sur une offre sponsorisée,<br>
+    <b>nous</b> parlons d'abord à un lecteur d'ici, et nous disons ce que nous ne savons pas.
+  </blockquote>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card">
+      <h3>Phrase d'accroche (hypothèse à tester)</h3>
+      <p class="copy">« Le marché crypto du jour, en clair, pour les débutants au Sénégal. »</p>
+      <p class="why">Reprend la consigne de l'analyse : écrire « pour les débutants au Sénégal » dans le haut de page (<a class="chip" href="#ev-A">Analyse §6, reco 2</a>).</p>
+    </div>
+    <div class="card">
+      <h3>Pourquoi ce terrain est libre</h3>
+      <ul>
+        <li>Aucune mention du Sénégal, du FCFA ou du Mobile Money sur les pages relevées (<a class="chip" href="#ev-U1">U1</a> <a class="chip" href="#ev-U2">U2</a> <a class="chip" href="#ev-U3">U3</a> <a class="chip" href="#ev-U4">U4</a> <a class="chip" href="#ev-U5">U5</a>).</li>
+        <li>Les deux promettent déjà un récapitulatif quotidien, mais en bloc secondaire : « récapitulatif de l'actualité crypto chaque jour » (<a class="chip" href="#ev-U2">U2</a>), « résumées en 2 minutes » (<a class="chip" href="#ev-U4">U4</a>). Le différenciateur n'est donc pas « le résumé » mais « le résumé d'ici, mis en avant ».</li>
+      </ul>
+    </div>
+  </div>
+  <div class="proof"><span class="lbl">Preuves</span>
+    <a class="chip" href="#ev-A">Analyse §1 « West-African audience »</a>
+    <a class="chip" href="#ev-A">Analyse §2 « West-African audience »</a>
+    <a class="chip" href="#ev-A">Analyse §4 écarts 1, 2, 4</a>
+    <a class="chip" href="#ev-S1">S1</a> <a class="chip" href="#ev-S3">S3</a>
+  </div>
+  <div class="thumbs">
+    <figure class="th"><a href="screenshots/cryptoast-home-fullpage.png"><img src="screenshots/cryptoast-home-fullpage.png" alt="Capture de la page d'accueil de Cryptoast : bandeau sponsorisé en haut, actualités, avis sur les plateformes" loading="lazy"></a><figcaption><b>S1</b> – Cryptoast : bandeau sponsorisé avant l'éditorial.</figcaption></figure>
+    <figure class="th"><a href="screenshots/journalducoin-home-fullpage.png"><img src="screenshots/journalducoin-home-fullpage.png" alt="Capture de la page d'accueil de Journal du Coin : bannière Gate EU en haut, fil d'actualités, comparatifs" loading="lazy"></a><figcaption><b>S3</b> – Journal du Coin : bannière Gate EU en premier écran.</figcaption></figure>
+  </div>
+</section>
+
+<section id="piliers">
+  <h2>2. Trois piliers de marque</h2>
+  <p class="lead">Chaque pilier répond à un constat de l'analyse et se traduit par un engagement vérifiable.</p>
+  <div class="grid g3">
+    <div class="card">
+      <h3>1. Clair et court</h3>
+      <p><b>Engagement :</b> une réponse d'un écran d'abord, le détail ensuite. Chaque mot technique est expliqué en une phrase.</p>
+      <p class="why"><b>Constat :</b> pilier Cryptoast d'environ 11 800 mots sur le Bitcoin (<a class="chip" href="#ev-U2">U2</a>) ; pages d'accueil denses avec plusieurs fenêtres superposées (<a class="chip" href="#ev-S1">S1</a>, <a class="chip" href="#ev-S3">S3</a>). Les réponses courtes ne sont pas le schéma dominant (<a class="chip" href="#ev-A">Analyse §4, écart 3</a>).</p>
+    </div>
+    <div class="card">
+      <h3>2. Ancré ici</h3>
+      <p><b>Engagement :</b> repères en FCFA à côté des € et $, exemples locaux quand ils sont pertinents (Wave, Orange Money), et vérification locale avant tout guide pratique.</p>
+      <p class="why"><b>Constat :</b> contenus cadrés Europe : MiCA, PSAN, PEA, exchanges pour utilisateurs UE (<a class="chip" href="#ev-U1">U1</a>, <a class="chip" href="#ev-U4">U4</a>, <a class="chip" href="#ev-U5">U5</a>, <a class="chip" href="#ev-S3">S3</a>). Utilité de ces contenus au Sénégal : non observée (<a class="chip" href="#ev-A">Analyse §4, écart 2</a>).</p>
+    </div>
+    <div class="card">
+      <h3>3. Honnête et indépendant</h3>
+      <p><b>Engagement :</b> pas de conseil d'achat, pas de promesse de gains, publicité étiquetée, politique d'indépendance publiée, date de mise à jour visible, limites assumées.</p>
+      <p class="why"><b>Constat :</b> les deux ouvrent sur une offre sponsorisée ou d'affiliation (<a class="chip" href="#ev-U1">U1</a>, <a class="chip" href="#ev-U4">U4</a>) ; un guide Journal du Coin porte la date du 29 février 2024 (<a class="chip" href="#ev-U5">U5</a>). Le libellé « Publicité » existe déjà chez eux : c'est la norme minimale à dépasser.</p>
+    </div>
+  </div>
+  <div class="proof"><span class="lbl">Preuves</span>
+    <a class="chip" href="#ev-A">Analyse §3 forces, §4 écarts 1–5, §6 recos 2–4</a>
+    <a class="chip" href="#ev-U2">U2</a> <a class="chip" href="#ev-U5">U5</a> <a class="chip" href="#ev-S1">S1</a> <a class="chip" href="#ev-S3">S3</a>
+  </div>
+</section>
+
+<section id="calendrier">
+  <h2>3. Calendrier de contenu sur 4 semaines</h2>
+  <p class="lead">LinkedIn (3 publications par semaine, rythme de travail réaliste pour une petite équipe) et chaîne WhatsApp (le résumé quotidien est le produit lui-même ; s'y ajoutent un message épinglé ou un sondage par semaine). Un créneau par semaine reste libre pour réagir à l'actualité.</p>
+  <table>
+    <thead>
+      <tr><th style="width:12%">Semaine</th><th style="width:36%">LinkedIn</th><th style="width:36%">Chaîne WhatsApp</th><th>Preuve</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><b>Sem. 1</b><br>Se présenter, prouver l'utilité</td>
+        <td><ul>
+          <li><b>Lun.</b> Lancement : « Chaque jour, le marché crypto en quelques lignes, en français simple, pour les débutants au Sénégal. » + lien vers la chaîne.</li>
+          <li><b>Mer.</b> Pourquoi court : le guide de référence sur le Bitcoin d'un concurrent fait environ 11 800 mots ; nous, on commence par l'essentiel.</li>
+          <li><b>Ven.</b> Ce que nous ne faisons pas : aucun conseil d'achat, aucune promesse de gains.</li>
+        </ul></td>
+        <td><ul>
+          <li>Message d'accueil épinglé : à quoi s'attendre, règle « informatif, pas un conseil ».</li>
+          <li>Résumé du jour, chaque jour.</li>
+          <li>Sondage : « Quel mot voulez-vous qu'on explique en premier ? »</li>
+        </ul></td>
+        <td><a class="chip" href="#ev-U2">U2</a> <a class="chip" href="#ev-A">Analyse §6 reco 1, 3, 4</a></td>
+      </tr>
+      <tr>
+        <td><b>Sem. 2</b><br>Repères en FCFA</td>
+        <td><ul>
+          <li><b>Lun.</b> « Les prix crypto sont presque toujours en € ou en $. » Exemple de carte avec la valeur en FCFA, source et date du taux indiquées.</li>
+          <li><b>Mer.</b> Lire un prix et une variation sans se tromper : explication courte, sans prévision.</li>
+          <li><b>Ven.</b> Créneau libre (actualité).</li>
+        </ul></td>
+        <td><ul>
+          <li>Résumé du jour avec la ligne « en FCFA ».</li>
+          <li>Carte « Le prix du jour en FCFA » partageable, avec source et heure.</li>
+        </ul></td>
+        <td><a class="chip" href="#ev-A">Analyse §1 et §2 « West-African audience »</a> <a class="chip" href="#ev-S1">S1</a></td>
+      </tr>
+      <tr>
+        <td><b>Sem. 3</b><br>Comprendre sans jargon</td>
+        <td><ul>
+          <li><b>Lun.</b> Trois mots en une phrase chacun (blockchain, portefeuille, volatilité).</li>
+          <li><b>Mer.</b> Extrait d'un résumé du jour : « voici à quoi ressemble 1 minute de lecture ».</li>
+          <li><b>Ven.</b> Question reçue de la chaîne, réponse publique.</li>
+        </ul></td>
+        <td><ul>
+          <li>« Le mot du jour » en une phrase, en plus du résumé.</li>
+          <li>Début du parcours débutant : une réponse courte par message (voir <a href="#acq3">idée 3</a>).</li>
+        </ul></td>
+        <td><a class="chip" href="#ev-U4">U4</a> (Lexique) <a class="chip" href="#ev-U1">U1</a> (Les essentiels) <a class="chip" href="#ev-S1">S1</a></td>
+      </tr>
+      <tr>
+        <td><b>Sem. 4</b><br>Transparence et communauté</td>
+        <td><ul>
+          <li><b>Lun.</b> Comment nous travaillons : sources, publicité, date de mise à jour.</li>
+          <li><b>Mer.</b> Bilan de la première période : questions les plus posées, ce que nous changeons.</li>
+          <li><b>Ven.</b> Créneau libre (actualité).</li>
+        </ul></td>
+        <td><ul>
+          <li>Message épinglé : « Transférez le résumé à quelqu'un qui débute » (<a href="#acq4">idée 4</a>).</li>
+          <li>Sondage de retour : trop long / juste bien / trop court.</li>
+        </ul></td>
+        <td><a class="chip" href="#ev-U1">U1</a> <a class="chip" href="#ev-U4">U4</a> <a class="chip" href="#ev-U5">U5</a> <a class="chip" href="#ev-A">Analyse §6 reco 4</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="note" style="margin-top:14px">
+    <b>Hypothèses à signaler.</b> La chaîne WhatsApp est « une hypothèse à tester » dans l'analyse : aucune des deux publications ne l'affiche dans les pieds de page observés (Journal du Coin liste Telegram ; pour Cryptoast, c'est non observé) (<a class="chip" href="#ev-A">Analyse §6 reco 1</a>, <a class="chip" href="#ev-U4">U4</a>). Le choix de LinkedIn comme canal est celui de la demande ; l'analyse n'a pas mesuré la présence des débutants sénégalais sur ce réseau.
+  </div>
+  <div class="proof"><span class="lbl">Preuves</span>
+    <a class="chip" href="#ev-A">Analyse §3 (multicanal, parcours débutant)</a>
+    <a class="chip" href="#ev-A">Analyse §6</a>
+    <a class="chip" href="#ev-U1">U1</a> <a class="chip" href="#ev-U2">U2</a> <a class="chip" href="#ev-U4">U4</a>
+  </div>
+</section>
+
+<section id="landing">
+  <h2>4. Sept améliorations de la page d'accueil</h2>
+  <p class="lead">Une page légère, en une colonne, pensée pour le mobile et pour une seule action.</p>
+  <ol class="items">
+    <li>
+      <h3>Un vrai titre H1 qui dit à qui et quoi</h3>
+      <p>Ex. : « Le résumé crypto du jour, en français simple, pour les débutants au Sénégal. »</p>
+      <p class="why">Aucune des deux pages d'accueil n'a d'élément H1 (<a class="chip" href="#ev-A">Analyse §5</a>) ; leur promesse est dans le titre de page et la meta description seulement (<a class="chip" href="#ev-U1">U1</a>, <a class="chip" href="#ev-U4">U4</a>).</p>
+    </li>
+    <li>
+      <h3>Une seule action au-dessus de la ligne de flottaison : « Recevoir le résumé du jour »</h3>
+      <p>Pas de second bouton concurrent.</p>
+      <p class="why">Chez eux, le récapitulatif est un bloc secondaire en fin de page (<a class="chip" href="#ev-U2">U2</a>) ou en milieu de page (<a class="chip" href="#ev-U4">U4</a>), et les actions principales sont commerciales : « Bilan Crypto Offert » (<a class="chip" href="#ev-U1">U1</a>), bannière Gate EU (<a class="chip" href="#ev-S3">S3</a>).</p>
+    </li>
+    <li>
+      <h3>Choix du canal de réception (WhatsApp ou e-mail) avec consentement clair</h3>
+      <p>Une case de consentement explicite, comme le fait Journal du Coin ; WhatsApp proposé en test.</p>
+      <p class="why">Le formulaire Journal du Coin comporte une case de consentement (<a class="chip" href="#ev-U4">U4</a>, <a class="chip" href="#ev-S3">S3</a>). WhatsApp : hypothèse de l'analyse (<a class="chip" href="#ev-A">Analyse §6 reco 1</a>).</p>
+    </li>
+    <li>
+      <h3>Un exemple réel de résumé du jour, visible sans s'inscrire, avec lien vers un mini-glossaire</h3>
+      <p>Le visiteur voit ce qu'il va recevoir : quelques lignes, un mot expliqué.</p>
+      <p class="why">Les concurrents offrent beaucoup de contenu mais peu de réponses courtes (<a class="chip" href="#ev-A">Analyse §4, écart 3</a>) ; ils proposent leur parcours débutant sous forme de menus : « Les essentiels » (<a class="chip" href="#ev-U1">U1</a>, <a class="chip" href="#ev-S1">S1</a>), « Lexique crypto » (<a class="chip" href="#ev-U4">U4</a>).</p>
+    </li>
+    <li>
+      <h3>Repères en FCFA à côté des € et $, avec source et heure du taux</h3>
+      <p>Un bloc « Le marché en bref » où chaque valeur apparaît aussi en FCFA. Mentionner Wave ou Orange Money seulement quand c'est pertinent, jamais comme moyen d'achat sans vérification.</p>
+      <p class="why">Les blocs de prix de Cryptoast (« Cryptos en bref », « Cryptos tendance », <a class="chip" href="#ev-S1">S1</a>) et ses exemples sont en € et $ (<a class="chip" href="#ev-A">Analyse §1</a>) ; aucun FCFA relevé (<a class="chip" href="#ev-A">Analyse §4, écart 1</a>).</p>
+    </li>
+    <li>
+      <h3>Zéro fenêtre superposée, page légère, bandeau de cookies avec option « essentiels uniquement »</h3>
+      <p>Pas de pop-up, pas de formulaire d'avis qui s'ouvre seul. Mesurer le poids de la page sur mobile avant et après la mise en ligne.</p>
+      <p class="why">Trois fenêtres sur la capture Cryptoast : bandeau de cookies, bandeau glissant Crypto Stratège, formulaire « Donnez-nous votre avis » (<a class="chip" href="#ev-S1">S1</a>). Le bandeau ne propose que « Compris ! », sans option essentielle (<a class="chip" href="#ev-A">Analyse §1 « Cookies »</a>). Le poids des pages concurrentes est non observé.</p>
+    </li>
+    <li>
+      <h3>Un bloc « Indépendance, publicité et limites », plus une date de mise à jour sur chaque explication</h3>
+      <p>Qui finance le site, ce qui est étiqueté « Publicité », ce que nous ne faisons pas (conseil, promesse de gains), date de dernière vérification.</p>
+      <p class="why">Chez eux : offre sponsorisée en premier écran (<a class="chip" href="#ev-U1">U1</a>, <a class="chip" href="#ev-U4">U4</a>, <a class="chip" href="#ev-S1">S1</a>, <a class="chip" href="#ev-S3">S3</a>) ; un guide daté du 29 février 2024 (<a class="chip" href="#ev-U5">U5</a>, <a class="chip" href="#ev-S4">S4</a>).</p>
+    </li>
+  </ol>
+  <div class="proof"><span class="lbl">Preuves</span>
+    <a class="chip" href="#ev-A">Analyse §5 (motifs communs), §6 recos 1, 4, 5</a>
+    <a class="chip" href="#ev-S1">S1</a> <a class="chip" href="#ev-S3">S3</a> <a class="chip" href="#ev-U1">U1</a> <a class="chip" href="#ev-U4">U4</a>
+  </div>
+  <div class="thumbs">
+    <figure class="th"><a href="screenshots/cryptoast-home-fullpage.png"><img src="screenshots/cryptoast-home-fullpage.png" alt="Capture de la page d'accueil de Cryptoast montrant plusieurs fenêtres superposées" loading="lazy"></a><figcaption><b>S1</b> – trois fenêtres superposées, prix en $, parcours « Les essentiels ».</figcaption></figure>
+    <figure class="th"><a href="screenshots/journalducoin-home-fullpage.png"><img src="screenshots/journalducoin-home-fullpage.png" alt="Capture de la page d'accueil de Journal du Coin avec bloc d'inscription à la lettre au milieu de la page" loading="lazy"></a><figcaption><b>S3</b> – lettre d'information en milieu de page, case de consentement.</figcaption></figure>
+  </div>
+</section>
+
+<section id="acquisition">
+  <h2>5. Cinq idées d'acquisition que les concurrents n'utilisent pas</h2>
+  <p class="lead">« N'utilisent pas » signifie : non observé sur les pages visitées (2 pages par site, sans connexion). Ce sont des hypothèses à tester, pas des résultats.</p>
+  <ol class="items">
+    <li id="acq1">
+      <h3>La chaîne WhatsApp comme canal principal de distribution</h3>
+      <p>Le résumé arrive là où le lecteur est déjà, sans application à installer ni e-mail à ouvrir ; LinkedIn et le site servent à mener vers la chaîne.</p>
+      <p class="why">Journal du Coin affiche YouTube, X, Telegram et TikTok (<a class="chip" href="#ev-U4">U4</a>), Cryptoast des applications mobiles (<a class="chip" href="#ev-U1">U1</a>) ; WhatsApp n'apparaît pas dans ce qui a été observé (<a class="chip" href="#ev-A">Analyse §6 reco 1</a>). Usage de WhatsApp par le lectorat cible : non observé.</p>
+    </li>
+    <li id="acq2">
+      <h3>La carte « Prix du jour en FCFA », faite pour être transférée</h3>
+      <p>Une image simple par jour : valeur, variation, taux de conversion, source, heure. Sans prévision.</p>
+      <p class="why">Les prix sont en € et $ chez les deux (<a class="chip" href="#ev-A">Analyse §1, §2, §4 écart 1</a>, <a class="chip" href="#ev-S1">S1</a>). Une carte lisible et sourcée est un contenu que seul un acteur local a intérêt à produire.</p>
+    </li>
+    <li id="acq3">
+      <h3>Un parcours débutant livré par messages courts, pas par menu</h3>
+      <p>Une réponse d'un écran par message sur la chaîne (« C'est quoi un portefeuille ? »), qui renvoie vers le glossaire. Le lecteur avance sans chercher.</p>
+      <p class="why">Leurs parcours débutants sont des rubriques à explorer : « Les essentiels » (<a class="chip" href="#ev-U1">U1</a>), « Lexique crypto » et « Encyclopédie du Coin » (<a class="chip" href="#ev-U4">U4</a>), à côté d'un pilier de 11 800 mots (<a class="chip" href="#ev-U2">U2</a>).</p>
+    </li>
+    <li id="acq4">
+      <h3>Le bouche-à-oreille sans récompense financière : « Transférez à quelqu'un qui débute »</h3>
+      <p>Un lien d'invitation direct, un message prêt à transférer, aucun bonus en crypto ni en argent.</p>
+      <p class="why">Leurs incitations sont des récompenses d'exchange : « 60 € offerts en BTC » (<a class="chip" href="#ev-U2">U2</a>), « jusqu'à 520 USDC » (<a class="chip" href="#ev-U4">U4</a>, <a class="chip" href="#ev-S3">S3</a>). Se distinguer par l'absence de récompense financière va avec le pilier « Honnête et indépendant ».</p>
+    </li>
+    <li id="acq5">
+      <h3>Une fiche « Vérifié pour le Sénégal », datée, avant tout guide pratique</h3>
+      <p>Avant de parler d'achat ou de plateformes, une page qui dit ce qui a été vérifié localement, ce qui ne l'a pas été, et à quelle date. Elle devient aussi un contenu à partager sur LinkedIn.</p>
+      <p class="why">Leurs contenus pratiques sont cadrés Europe (MiCA, PSAN, PEA, « Gate EU ») et ne disent pas ce qui vaut au Sénégal (<a class="chip" href="#ev-U1">U1</a>, <a class="chip" href="#ev-U4">U4</a>, <a class="chip" href="#ev-U5">U5</a>) ; la date de 2024 sur un guide (<a class="chip" href="#ev-U5">U5</a>). Le cadre légal sénégalais est non observé ici : <b>à vérifier avec une source qualifiée avant publication</b>, sans rien supposer à partir des concurrents (<a class="chip" href="#ev-A">Analyse §6 reco 4</a>).</p>
+    </li>
+  </ol>
+  <div class="proof"><span class="lbl">Preuves</span>
+    <a class="chip" href="#ev-A">Analyse §4 (écarts), §5 (motifs communs), §6 (recos)</a>
+    <a class="chip" href="#ev-U1">U1</a> <a class="chip" href="#ev-U2">U2</a> <a class="chip" href="#ev-U4">U4</a> <a class="chip" href="#ev-U5">U5</a> <a class="chip" href="#ev-S3">S3</a>
+  </div>
+</section>
+
+<section id="quickwins">
+  <h2>6. Trois gains rapides pour cette semaine</h2>
+  <p class="lead">Réalisables sans développement lourd ni budget publicitaire.</p>
+  <div class="grid g3">
+    <div class="card">
+      <h3>1. Réécrire le haut de page</h3>
+      <p>Un H1 « pour les débutants au Sénégal » et un seul bouton « Recevoir le résumé du jour ». Retirer tout autre appel à l'action au premier écran.</p>
+      <p class="why"><a class="chip" href="#ev-A">Analyse §5 (pas de H1)</a> <a class="chip" href="#ev-A">§6 recos 1, 2</a> <a class="chip" href="#ev-S1">S1</a> <a class="chip" href="#ev-S3">S3</a></p>
+    </div>
+    <div class="card">
+      <h3>2. Ouvrir la chaîne WhatsApp et publier trois résumés</h3>
+      <p>Créer la chaîne, épingler le message d'accueil (règle « informatif, pas un conseil »), publier les trois premiers résumés pour que le lien d'invitation mène à une chaîne déjà vivante. À présenter comme un test.</p>
+      <p class="why"><a class="chip" href="#ev-A">Analyse §6 reco 1</a> <a class="chip" href="#ev-U4">U4</a></p>
+    </div>
+    <div class="card">
+      <h3>3. Publier la page « Indépendance et limites »</h3>
+      <p>Quelques lignes : financement, publicité étiquetée, pas de conseil ni de promesse de gains, date de dernière mise à jour. À lier depuis le pied de page et le message épinglé.</p>
+      <p class="why"><a class="chip" href="#ev-A">Analyse §6 reco 4</a> <a class="chip" href="#ev-U1">U1</a> <a class="chip" href="#ev-U4">U4</a> <a class="chip" href="#ev-U5">U5</a></p>
+    </div>
+  </div>
+  <div class="proof"><span class="lbl">Preuves</span>
+    <a class="chip" href="#ev-A">Analyse §6, recos 1, 2, 4</a>
+    <a class="chip" href="#ev-S1">S1</a> <a class="chip" href="#ev-S3">S3</a> <a class="chip" href="#ev-U4">U4</a>
+  </div>
+</section>
+
+<section id="suivi">
+  <h2>Suivi, sans objectifs chiffrés</h2>
+  <p class="lead">L'analyse n'a aucune donnée de départ (trafic, taille des audiences : non observé). Fixer des cibles n'aurait donc aucun fondement ; il faut d'abord mesurer.</p>
+  <div class="card">
+    <ul>
+      <li><b>Chaîne WhatsApp :</b> nombre d'abonnés, réactions et réponses aux sondages par semaine.</li>
+      <li><b>Page d'accueil :</b> part des visiteurs qui cliquent sur le bouton unique ; poids de la page sur mobile, mesuré avant et après.</li>
+      <li><b>LinkedIn :</b> clics vers la chaîne, enregistrements et partages par publication.</li>
+      <li><b>Partage :</b> nombre d'entrées via le lien « Transférez à quelqu'un qui débute » (lien distinct pour le suivre).</li>
+    </ul>
+    <p class="why">Fixer des cibles après deux à quatre semaines de mesure, puis relire ce plan. Pour obtenir des références de marché, il faut autoriser SimilarWeb ou Ahrefs dans les connecteurs du plugin.</p>
+  </div>
+  <div class="proof"><span class="lbl">Preuves</span>
+    <a class="chip" href="#ev-A">Analyse « Method and limits » (trafic, audience, poids : non observé)</a>
+  </div>
+</section>
+
+<section id="preuves">
+  <h2>Index des preuves</h2>
+  <p class="lead">Source : <code>competitive-analysis.md</code>, observation du 6 octobre 2026, navigateur Playwright, pages publiques, sans connexion ni formulaire envoyé, aucun consentement aux cookies donné.</p>
+  <table>
+    <thead><tr><th style="width:9%">ID</th><th style="width:16%">Type</th><th>Référence</th></tr></thead>
+    <tbody>
+      <tr id="ev-A"><td><b>Analyse</b></td><td>Document</td><td><code>competitive-analysis.md</code> : §1 Cryptoast, §2 Journal du Coin, §3 forces, §4 écarts, §5 motifs communs, §6 recommandations, « Method and limits ».</td></tr>
+      <tr id="ev-S1"><td><b>S1</b></td><td>Capture (PNG)</td><td><code>screenshots/cryptoast-home-fullpage.png</code> – accueil Cryptoast. <a href="screenshots/cryptoast-home-fullpage.png">Ouvrir</a></td></tr>
+      <tr id="ev-S2"><td><b>S2</b></td><td>Capture (JPEG)</td><td><code>screenshots/cryptoast-educational-bitcoin-fullpage.jpeg</code> – page /bitcoin/ ; non intégrée (JPEG d'environ 9 Mo, page de 51 150 px de haut) ; le détail a été lu dans le texte de la page, cité via U2.</td></tr>
+      <tr id="ev-S3"><td><b>S3</b></td><td>Capture (PNG)</td><td><code>screenshots/journalducoin-home-fullpage.png</code> – accueil Journal du Coin. <a href="screenshots/journalducoin-home-fullpage.png">Ouvrir</a></td></tr>
+      <tr id="ev-S4"><td><b>S4</b></td><td>Capture (JPEG)</td><td><code>screenshots/journalducoin-educational-cryptomonnaie-fullpage.jpeg</code> – guide « cryptomonnaie » ; non intégrée (JPEG), citée via U5.</td></tr>
+      <tr id="ev-U1"><td><b>U1</b></td><td>URL</td><td>https://cryptoast.fr/ (en ligne)</td></tr>
+      <tr id="ev-U2"><td><b>U2</b></td><td>URL</td><td>https://cryptoast.fr/bitcoin/ (en ligne) – pilier d'environ 11 800 mots.</td></tr>
+      <tr id="ev-U3"><td><b>U3</b></td><td>URL</td><td>https://cryptoast.fr/formation/ (en ligne) – visitée pour les prix uniquement ; aucun prix trouvé.</td></tr>
+      <tr id="ev-U4"><td><b>U4</b></td><td>URL</td><td>https://journalducoin.com/ (en ligne)</td></tr>
+      <tr id="ev-U5"><td><b>U5</b></td><td>URL</td><td>https://journalducoin.com/guides/cryptomonnaie/ (en ligne) – environ 4 500 mots, daté du 29 février 2024.</td></tr>
+      <tr id="ev-U6"><td><b>U6</b></td><td>URL</td><td>https://journalducoin.com/bitcoin/ (en ligne) – page d'actualités, écartée comme page éducative ; non utilisée dans ce plan.</td></tr>
+    </tbody>
+  </table>
+  <div class="thumbs">
+    <figure class="th"><a href="screenshots/cryptoast-home-fullpage.png"><img src="screenshots/cryptoast-home-fullpage.png" alt="Miniature de la capture S1, accueil Cryptoast" loading="lazy"></a><figcaption><b>S1</b> – accueil Cryptoast (PNG).</figcaption></figure>
+    <figure class="th"><a href="screenshots/journalducoin-home-fullpage.png"><img src="screenshots/journalducoin-home-fullpage.png" alt="Miniature de la capture S3, accueil Journal du Coin" loading="lazy"></a><figcaption><b>S3</b> – accueil Journal du Coin (PNG).</figcaption></figure>
+  </div>
+</section>
+
+<footer>
+  <p>Plan produit avec le plugin marketing (compétences <code>campaign-plan</code> et analyse concurrentielle fournie). Les connecteurs Ahrefs, SimilarWeb, Amplitude et autres sont en attente d'autorisation : aucune donnée externe n'a été utilisée. Contenu informatif ; aucun conseil financier, aucune promesse de rendement.</p>
+  <p>Les miniatures sont chargées depuis le dossier <code>screenshots/</code> : garder ce dossier à côté de <code>marketing-plan.html</code>.</p>
+</footer>
+
+</main>
+</body>
+</html>

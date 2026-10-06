@@ -1,0 +1,155 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Atelier Claude Code — KaayNioujangat</title><style>
+@page { size: A4; margin: 16mm 14mm; }
+:root { --green:#127a4a; --ink:#121a22; --muted:#54687c; --line:#d5dfe9; }
+* { box-sizing: border-box; }
+body { font: 10.5pt/1.5 "Segoe UI", "Trebuchet MS", sans-serif; color: var(--ink); margin: 0; }
+.cover { min-height: 245mm; display: flex; flex-direction: column; justify-content: center; page-break-after: always; border-left: 6px solid #7af2a2; padding-left: 14mm; }
+.cover h1 { font-size: 30pt; line-height: 1.15; margin: 0 0 10mm; }
+h2 { font-size: 17pt; color: var(--green); border-bottom: 2px solid #7af2a2; padding-bottom: 3px; margin: 0 0 6mm; page-break-before: always; break-after: avoid; }
+.cover + h2 { page-break-before: auto; }
+p { margin: 0 0 3mm; } ul { margin: 0 0 3mm 5mm; padding: 0; }
+code { font: 9pt Consolas, monospace; background: #eef2f8; padding: 0 3px; border-radius: 3px; }
+pre { font: 8.4pt/1.4 Consolas, monospace; background: #0f1418; color: #edf2f9; padding: 3mm 4mm; border-radius: 6px; white-space: pre-wrap; word-break: break-word; margin: 0 0 4mm; break-inside: avoid; }
+table { border-collapse: collapse; width: 100%; margin: 0 0 4mm; font-size: 9.5pt; break-inside: avoid; }
+th, td { border: 1px solid var(--line); padding: 2mm 3mm; text-align: left; } th { background: #e9eef4; }
+figure { margin: 0 0 5mm; text-align: center; break-inside: avoid; }
+figure img { max-width: 100%; max-height: 120mm; border: 1px solid var(--line); border-radius: 6px; }
+figure img[src*="mobile"] { max-height: 150mm; }
+figcaption { font-size: 9pt; color: var(--muted); margin-top: 1.5mm; }
+.slot div { border: 2px dashed #9aaec3; border-radius: 6px; padding: 12mm 4mm; color: var(--muted); background: #f7fafc; }
+.slot small { font: 8pt Consolas, monospace; }
+</style></head><body><section class="cover"><h1>Atelier Claude Code — adapté à KaayNioujangat</h1>
+<p>GET 409 — Design Thinking &amp; IA · Swiss UMEF University, Campus de Dakar</p>
+<p><strong>Étudiant :</strong> Salif Diallo · <strong>Enseignant :</strong> M. Malick Faye Diagne · <strong>Date :</strong> 6 octobre 2026</p>
+<p><strong>Projet fil rouge :</strong> KaayNioujangat, le résumé quotidien du marché crypto en français courant pour les débutants au Sénégal (<code>kaaynioujangat-html.html</code>).</p>
+</section>
+<h2>Comment lire ce document</h2>
+<p>L'atelier d'origine suit un studio fictif (« ATA suarl ») et un fichier <code>ata-card.html</code>. Ici, tout est transposé à mon projet : <code>ata-card.html</code> devient <strong><code>kaaynioujangat-html.html</code></strong>, et les prompts parlent de KaayNioujangat (prix en FCFA, français courant, aucune donnée inventée, « ceci n'est pas un conseil financier »).</p>
+<p><strong>Tout ce qui est montré a été réellement exécuté</strong> sur ma machine, avec Claude Code 2.1.292 (plan Pro), dans des dossiers de labo <code>~/claude-lab/…</code>. Les captures d'écran du terminal sont de vraies captures de fenêtres PowerShell ; celles du site et des pages générées sont prises dans Chrome. Aucun écran n'est reconstitué. Les fichiers produits sont dans le dossier <code>exercices/</code>.</p>
+<p>Les exercices ont été lancés en mode non interactif (<code>claude -p</code>, avec <code>--permission-mode plan</code> ou <code>acceptEdits</code>), sauf <code>/usage</code> capturé dans une vraie session. Ce qui n'a <strong>pas</strong> été fait est listé dans la section « Limites ».</p>
+<p>Périmètre traité : parcours <strong>Essentiel E00 à E06</strong>. Les épisodes E07 à E14 (PromptLens, boucle Ralph, agents) ne sont pas traités.</p>
+<h2>E00 — Installation vérifiée</h2>
+<p><strong>Objectif :</strong> Claude Code à jour (2.1.280 ou plus), connecté au plan Pro, sans clé API.</p>
+<pre>claude --version
+node --version
+git --version
+claude doctor</pre>
+<p><strong>Résultat réel :</strong> Claude Code <strong>2.1.292</strong>, Node v22.13.0, Git 2.47.1, aucune clé API dans l'environnement. <code>claude doctor</code> : installation npm globale, mises à jour automatiques actives (dernière mise à jour réussie le 06/10/2026), <code>Organization policy: not applicable to Pro and Max accounts</code> et « No installation issues found ».</p>
+<figure><img src="img/e00-versions.png" alt=""><figcaption>Versions et absence de clé API (sortie réelle)</figcaption></figure>
+<figure><img src="img/e00-claude-doctor.png" alt=""><figcaption><code>claude doctor</code> (sortie réelle)</figcaption></figure>
+<h2>E01 — Premier prompt : la page KaayNioujangat</h2>
+<p><strong>Objectif :</strong> lancer Claude dans un dossier d'exercice et générer la page. Ma page <code>kaaynioujangat-html.html</code> avait déjà été générée avant cet atelier ; elle sert de référence pour tout le reste.</p>
+<pre>mkdir $HOME\claude-lab\01-hello
+cd $HOME\claude-lab\01-hello
+git init
+claude</pre>
+<p>Au premier lancement dans un dossier, Claude demande si on lui fait confiance. Ensuite l'écran d'accueil indique la version et le plan.</p>
+<figure><img src="img/e01-confiance-dossier.png" alt=""><figcaption>Écran d'accueil : Claude Code v2.1.292, Sonnet 5.5, Claude Pro</figcaption></figure>
+<p><strong>Prompt de départ (adapté de <code>ata-card.html</code>) :</strong></p>
+<pre>Context: I am building KaayNioujangat, a daily crypto market summary in plain French for beginners in Senegal.
+Task: Create a single self-contained file `kaaynioujangat-html.html`: a one-page site with 5 views (Accueil, Résumé du Jour, Signaux du Jour, Offres, Contact), a light/dark toggle, a price ticker, a signals grid with search/filter/sort, and a footer.
+Constraints: One file, no framework. French copy. Prices in FCFA. Do not invent users, testimonials or figures other than clearly labelled demo data. Always show "Ceci n'est pas un conseil financier". Never put API keys in the page.
+Definition of done: Opening the file in a browser shows the site, responsive down to 360px wide.</pre>
+<p><strong>Consommation :</strong> <code>/usage</code> lancé dans une vraie session interactive. Il montre le quota Pro en cours (38 % de la session, 5 % de la semaine au moment de la capture).</p>
+<figure><img src="img/e01-usage.png" alt=""><figcaption><code>/usage</code> : consommation du quota Pro (session réelle)</figcaption></figure>
+<p><strong>La page obtenue</strong>, thème sombre (par défaut) et thème clair :</p>
+<figure><img src="img/site-accueil-sombre.png" alt=""><figcaption>Accueil, thème sombre</figcaption></figure>
+<figure><img src="img/site-accueil-clair.png" alt=""><figcaption>Accueil, thème clair</figcaption></figure>
+<h2>E02 — Qui décide ? Mode plan et retour arrière</h2>
+<p><strong>Objectif :</strong> planifier sans rien modifier, approuver, puis vérifier avec git.</p>
+<p><strong>Adaptation.</strong> L'atelier demande d'ajouter un thème inverse. Dans mon projet, le thème clair/sombre <strong>existe déjà</strong> (variables <code>:root[data-theme="light"]</code>, bouton <code>#theme-toggle</code>, mémorisation dans <code>localStorage</code>). J'ai donc remplacé l'exercice par un vrai défaut trouvé en testant la page à 360 px.</p>
+<p><strong>Le défaut.</strong> À 360 px, la page déborde : <code>document.documentElement.scrollWidth</code> vaut <strong>2234 px</strong> au lieu de 360, l'en-tête mesure 2234 px, et seule la partie gauche (vide) du site est visible.</p>
+<figure><img src="img/site-mobile-360-avant.png" alt=""><figcaption>Avant : à 360 px la page est illisible (débordement horizontal)</figcaption></figure>
+<p><strong>Étape 1 : sauvegarde git.</strong> Copie du fichier dans <code>~/claude-lab/01-hello</code>, puis <code>git add -A</code> et <code>git commit -m "page kaaynioujangat"</code>.</p>
+<p><strong>Étape 2 : plan sans modification</strong> (<code>claude -p --permission-mode plan</code>) avec ce prompt :</p>
+<pre>Context: `kaaynioujangat-html.html` overflows horizontally at 360px: scrollWidth is 2234px, the header is 2234px wide and the page cannot be used on a phone. The theme toggle already exists and must not change.
+Task: Plan (do not edit yet) how to find the root cause and fix it, without changing the desktop layout.
+Constraints: Keep the file self-contained. No new files. Do not touch the ticker animation or the theme logic.
+Definition of done: A numbered plan with the suspected cause, the exact CSS change, and how you will test it at 360px and at 1280px.
+Files to touch: `kaaynioujangat-html.html` (after plan approval only).</pre>
+<p><strong>Réponse réelle de Claude :</strong> la cause est <code>.app</code>, une grille avec seulement <code>grid-template-rows</code>. Sa colonne implicite est en <code>auto</code>, donc elle s'élargit jusqu'à la largeur du ticker (<code>width: max-content</code>, environ 2234 px). Le correctif proposé : <code>grid-template-columns: minmax(0, 1fr);</code> dans <code>.app</code>. Le plan complet est dans <code>exercices/01-hello/plan-output.txt</code>.</p>
+<figure><img src="img/e02-plan-mode.png" alt=""><figcaption>Début du plan produit par Claude en mode plan (sortie réelle)</figcaption></figure>
+<p><strong>Preuve que rien n'a été modifié pendant le plan :</strong> seul le fichier du plan est apparu dans <code>git status</code>, la page n'a pas changé.</p>
+<figure><img src="img/e02-git-status-apres-plan.png" alt=""><figcaption><code>git status</code> après le plan : la page est intacte</figcaption></figure>
+<p><strong>Étape 3 : approbation et application</strong> (<code>--permission-mode acceptEdits</code>, limité à ce seul changement). Le diff réel est d'une seule ligne ajoutée :</p>
+<figure><img src="img/e02-diff.png" alt=""><figcaption><code>git diff</code> après application du correctif (sortie réelle)</figcaption></figure>
+<p><strong>Étape 4 : vérification dans Chrome.</strong> À 360 px, <code>scrollWidth</code> passe de 2234 à <strong>360</strong>. À 1280 px, la page ne déborde pas non plus (<code>scrollWidth</code> 1265, soit la largeur de la fenêtre moins la barre de défilement). Je n'ai pas comparé le rendu du bureau avant et après.</p>
+<figure><img src="img/site-mobile-360-apres-correctif.png" alt=""><figcaption>Après correctif : la page tient dans 360 px</figcaption></figure>
+<p><strong>Limite.</strong> Le correctif a été appliqué sur la copie du dossier de labo (<code>exercices/01-hello/kaaynioujangat-html.corrige-360px.html</code>). Mon fichier <code>kaaynioujangat-html.html</code> du dépôt n'a pas été modifié. Le retour arrière (Échap Échap / <code>/rewind</code>) est interactif : je ne l'ai pas démontré.</p>
+<h2>E03 — Landing page : sans skill, puis avec frontend-design</h2>
+<p><strong>Objectif :</strong> voir ce qu'une skill change : même demande, deux dossiers (<code>v1-no-skill</code>, <code>v2-skill</code>).</p>
+<p><strong>Installation réelle du plugin</strong>, limitée au dossier v2 (<code>--scope local</code>) :</p>
+<pre>claude plugin marketplace add anthropics/claude-plugins-official
+claude plugin install frontend-design@claude-plugins-official --scope local</pre>
+<figure><img src="img/e03-install-frontend-design.png" alt=""><figcaption>Installation du plugin frontend-design (sortie réelle)</figcaption></figure>
+<p><strong>V1, sans skill</strong> (prompt : hero « Le marché crypto, expliqué simplement », 3 étapes, signaux de démonstration, offres, formulaire validé côté client, « Do not use any design skill »). <strong>V2, avec la skill</strong> : même contenu, « art direction rooted in Dakar », accents vert <code>#7af2a2</code> et ambre <code>#f2c06b</code> conservés, <code>prefers-reduced-motion</code> respecté.</p>
+<p>Les deux pages ont été générées pour de vrai (<code>exercices/03-landing/</code>).</p>
+<figure><img src="img/e03-v1-v2.png" alt=""><figcaption>Bureau : V1 sans skill (à gauche), V2 avec frontend-design (à droite)</figcaption></figure>
+<figure><img src="img/e03-v1-v2-mobile.png" alt=""><figcaption>À 360 px : les deux pages tiennent sans défilement horizontal</figcaption></figure>
+<p><strong>Direction artistique de la V2</strong> (les 5 lignes données par Claude, résumées) : titres en Palatino (sérif chaleureux) ; palette « Atlantique au crépuscule » <code>#0c2b33</code> contre des murs blanchis de Gorée <code>#dfe9e5</code>, avec mon vert pour les actions et mon ambre pour le soleil et les avertissements ; hero aligné à gauche sur un horizon de mer, étapes en « ligne de pêche » pointillée, signaux en tableau ; mouvement limité (un soleil qui se lève une fois, deux vagues lentes), tout coupé en <code>prefers-reduced-motion</code> ; détail signature : une bande de strakes de pirogue (vert, ambre, blanc). Le texte complet est dans <code>exercices/03-landing/v2-direction-artistique.txt</code>.</p>
+<p><strong>Ce qui s'est vraiment passé, avec les défauts :</strong></p>
+<ul>
+<li><strong>Premier essai de la V2 refusé.</strong> Claude Code ne voit que le dossier où il est lancé : il n'a pas pu lire <code>../v1-no-skill/index.html</code> et l'a dit au lieu d'inventer le contenu (<code>exercices/03-landing/v2-essai1-acces-refuse.txt</code>). Je l'ai relancé en autorisant la lecture de ce seul dossier avec <code>--add-dir ../v1-no-skill</code>, sans désactiver les protections.</li>
+<li><strong>Défaut visuel de la V2.</strong> Le « soleil » ambre chevauche le lien « Contact » du menu à 1280 px, et « Offres » à 360 px. Je ne l'ai pas corrigé : c'est un défaut à signaler.</li>
+<li><strong>Chargement de la skill non observé.</strong> En mode non interactif, je n'ai pas vu la ligne « Skill(frontend-design:frontend-design) — Successfully loaded skill ». Le plugin est bien installé ; le rendu de la V2 est cohérent avec son usage, mais je ne peux pas le prouver par cette ligne.</li>
+</ul>
+<h2>E04 — Commandes utiles et CLAUDE.md</h2>
+<p><strong>Objectif :</strong> générer puis raccourcir un CLAUDE.md propre au projet.</p>
+<p>Dans <code>v2-skill</code>, <code>/init</code> a produit un premier CLAUDE.md de <strong>20 lignes</strong>. Le prompt de réécriture (moins de 60 lignes, règles de design, de contenu, « Do / Don't ») l'a porté à <strong>39 lignes</strong>, toutes propres à la page : sections <code>#accueil</code>, <code>#comment</code>, <code>#signaux</code>, <code>#offres</code>, <code>#contact</code>, variables <code>:root</code> (<code>--mer</code>, <code>--vert</code> #7af2a2, <code>--ambre</code>), un seul point de rupture à 760 px, rappel « Ceci n'est pas un conseil financier » obligatoire à six endroits, signaux de démonstration jamais remplacés par de faux prix.</p>
+<figure><img src="img/e04-claude-md.png" alt=""><figcaption>Début du CLAUDE.md réel (39 lignes)</figcaption></figure>
+<p>Le fichier complet est dans <code>exercices/03-landing/v2-skill/CLAUDE.md</code>.</p>
+<p><strong>Non fait :</strong> la mémoire utilisateur (<code>~/.claude/CLAUDE.md</code>). Ce fichier existe déjà chez moi avec d'autres règles ; je ne l'ai pas modifié pour ne rien écraser.</p>
+<h2>E05 — Ma voix de marque en une commande : /kaay-brand</h2>
+<p><strong>Objectif :</strong> enregistrer l'identité KaayNioujangat dans une skill personnelle, puis produire un email, un post et un flyer cohérents.</p>
+<p><strong>Valeurs reprises du vrai site</strong> (aucune n'est inventée) : accroche « Le marché crypto, expliqué simplement » ; couleurs <code>#7af2a2</code> (principale), <code>#f2c06b</code> (accent), <code>#0f1418</code> (fond sombre), <code>#edf2f9</code> (texte) ; polices Avenir Next / Trebuchet MS / Segoe UI ; formule de clôture « Tu décides toi-même. » ; rappel obligatoire « Ceci n'est pas un conseil financier. ».</p>
+<p><strong>La skill.</strong> L'atelier demande à Claude de poser des questions avant d'écrire la skill. En mode non interactif il ne peut pas en poser : j'ai donc écrit moi-même <code>~/.claude/skills/kaay-brand/SKILL.md</code> (frontmatter avec <code>disable-model-invocation: true</code>, moins de 120 lignes) à partir des valeurs ci-dessus. Le fichier est dans <code>kaay-brand/SKILL.md</code>. Test réel dans un terminal PowerShell :</p>
+<figure><img src="img/e05-kaay-brand-actif.png" alt=""><figcaption><code>claude -p '/kaay-brand'</code> répond « Identité KaayNioujangat active. »</figcaption></figure>
+<p><strong>Email</strong> (<code>email-matin.html</code>, texte et HTML sous 150 mots, données de démonstration uniquement) : aux couleurs de la marque, avec le rappel et la formule de clôture.</p>
+<figure><img src="img/e05-email.png" alt=""><figcaption>Email du matin généré avec /kaay-brand</figcaption></figure>
+<p><strong>Post LinkedIn</strong> (fichier <code>post-linkedin.txt</code>, environ 115 mots, 3 hashtags <code>#Crypto #Sénégal #ÉducationFinancière</code>). Extrait réel : « Un signal te dit quoi faire. Un résumé t'aide à comprendre. Et comprendre, c'est le premier pas. », puis « Ceci n'est pas un conseil financier. » et « Tu décides toi-même. »</p>
+<p><strong>Flyer.</strong> Je n'ai pas de photo de production : j'ai utilisé comme <code>hero.png</code> une vraie capture de mon site. Le premier flyer avait un défaut mesuré : la page A4 fait 1123 px de haut (297 mm) avec <code>overflow: hidden</code>, mais le contenu en faisait <strong>1349</strong>, donc 226 px étaient coupés, dont le bouton, la signature et l'avertissement « pas un conseil financier ».</p>
+<figure><img src="img/e05-flyer-avant.png" alt=""><figcaption>Avant correction : le bas du flyer (bouton, avertissement) est coupé</figcaption></figure>
+<p>Étape de correction (comme la correction vocale de l'atelier) : j'ai demandé à Claude de tout faire tenir dans une page. Mesure après correction : <code>clipped = false</code>, bas du pied de page à 1123 px, soit exactement une page A4.</p>
+<figure><img src="img/e05-flyer.png" alt=""><figcaption>Après correction : tout le contenu tient dans l'A4, avertissement visible</figcaption></figure>
+<p><strong>Petits défauts restants :</strong> la capture du site recadre les boutons de la maquette, et « [ Heure à confirmer ] » passe sur deux lignes.</p>
+<h2>E06 — Plugins : Playwright, analyse des concurrents, plan marketing</h2>
+<p><strong>Objectif :</strong> installer deux plugins seulement dans ce dossier, analyser deux sites concurrents publics, puis produire un plan marketing.</p>
+<p><strong>Installation réelle</strong> (<code>~/claude-lab/06-plugins</code>, <code>--scope local</code>) : <code>playwright@claude-plugins-official</code> et <code>marketing@knowledge-work-plugins</code>.</p>
+<figure><img src="img/e06-plugin-list.png" alt=""><figcaption><code>claude plugin list</code> dans le dossier 06-plugins (sortie réelle)</figcaption></figure>
+<p><strong>Incident pendant l'installation.</strong> Ma première tentative a été coupée au milieu du clonage du dépôt <code>knowledge-work-plugins</code> : il restait un dossier temporaire verrouillé (<code>EBUSY</code>). Il avait disparu quand j'ai vérifié, aucun processus git ne tournait, et la deuxième tentative a réussi. Pour mémoire, <code>frontend-design</code> apparaît « disabled » dans ce dossier : il n'est installé que pour le dossier de l'épisode E03.</p>
+<p><strong>Analyse des concurrents.</strong> Playwright a visité deux sites publics français d'information crypto, <strong>cryptoast.fr</strong> et <strong>journalducoin.com</strong> (pages publiques, aucune connexion, aucun formulaire, aucun clic sur les bannières de cookies). Il a enregistré 4 captures pleine page ; ci-dessous, le haut de chacune des deux pages d'accueil.</p>
+<figure><img src="img/e06-captures-playwright.png" alt=""><figcaption>Haut des pages d'accueil des deux concurrents (captures Playwright)</figcaption></figure>
+<p>Constats du rapport <code>competitive-analysis.md</code> (chaque affirmation renvoie à une capture ou à une adresse, et « non observé » marque ce qui n'a pas été vu) : aucun des deux sites ne s'adresse au Sénégal, ni FCFA ni mobile money ; les deux mettent une offre partenaire avant l'actualité ; aucun prix visible ; contenus orientés Europe (€, PEA, MiCA). Cinq recommandations :</p>
+<ul>
+<li>faire du résumé quotidien l'action principale de la page, avec livraison par WhatsApp comme hypothèse à tester ;</li>
+<li>assumer l'angle ouest-africain (« pour les débutants au Sénégal », prix en FCFA) ;</li>
+<li>garder chaque résumé court et simple, et dater les explications ;</li>
+<li>rester non commercial et publier une politique d'indépendance ;</li>
+<li>une page légère, une seule action, une identité visuelle distincte des deux concurrents.</li>
+</ul>
+<p><strong>Plan marketing</strong> (<code>marketing-plan.html</code>, avec le plugin marketing) : positionnement, 3 piliers (« Clair et court », « Ancré ici », « Honnête et indépendant »), calendrier de 4 semaines (LinkedIn et chaîne WhatsApp), 7 améliorations de la page d'accueil, 5 idées d'acquisition, 3 gains rapides, suivi et index des preuves. Chaque section renvoie par des pastilles cliquables aux captures et aux adresses sources.</p>
+<figure><img src="img/e06-plan-marketing.png" alt=""><figcaption>Haut de la page <code>marketing-plan.html</code></figcaption></figure>
+<p><strong>Limites assumées par le plan lui-même :</strong> aucun objectif chiffré (les seuls chiffres viennent de l'analyse), trafic et taille des audiences « non observés » parce que les connecteurs SimilarWeb et Ahrefs demandent une autorisation dans claude.ai, cadre légal sénégalais à vérifier avant publication. Le rapport est écrit en anglais, car le prompt de l'atelier l'est.</p>
+<h2>Le site en images</h2>
+<p>Captures du fichier <code>kaaynioujangat-html.html</code> (prix Binance réels convertis en FCFA au moment de la capture).</p>
+<figure><img src="img/site-resume-sombre.png" alt=""><figcaption>Résumé du Jour</figcaption></figure>
+<figure><img src="img/site-signaux-clair.png" alt=""><figcaption>Signaux du Jour (thème clair)</figcaption></figure>
+<figure><img src="img/site-offres-sombre.png" alt=""><figcaption>Offres : consulter l'agent</figcaption></figure>
+<figure><img src="img/site-contact-sombre.png" alt=""><figcaption>Contact</figcaption></figure>
+<h2>Limites et ce qui reste à faire</h2>
+<ul>
+<li><strong>Non traités :</strong> épisodes E07 à E14.</li>
+<li><strong>Non faits :</strong> <code>/model opusplan</code> (le modèle affiché au lancement est Sonnet 5.5, réglage inchangé), la mémoire utilisateur <code>~/.claude/CLAUDE.md</code>, le retour arrière <code>/rewind</code>, <code>/status</code> (non capturé).</li>
+<li><strong>Mode non interactif :</strong> les exercices ont été lancés avec <code>claude -p</code>. Certaines lignes visibles en session interactive (demandes de permission, « Skill … Successfully loaded ») n'apparaissent donc pas.</li>
+<li><strong>Correctif de la page :</strong> appliqué seulement dans la copie du labo ; à reporter dans <code>kaaynioujangat-html.html</code> si je le décide.</li>
+<li><strong>Défauts constatés, non corrigés :</strong> « soleil » de la V2 qui recouvre le menu ; recadrage et retour à la ligne du flyer.</li>
+<li><strong>Marque :</strong> la skill <code>/kaay-brand</code> a été écrite directement, sans le jeu de questions-réponses de l'atelier.</li>
+</ul>
+<h2>Bilan</h2>
+<ul>
+<li>L'atelier est transposé à KaayNioujangat et chaque exercice a été exécuté pour de vrai, avec des captures réelles.</li>
+<li>Le test à 360 px (E02) a révélé un vrai défaut de la page, avec une cause identifiée par Claude et un correctif d'une ligne vérifié.</li>
+<li>Une skill change nettement le rendu (E03), mais elle ne remplace pas la vérification : la V2 est plus travaillée et a aussi un défaut visuel, et le premier flyer coupait l'avertissement légal.</li>
+<li>Claude Code ne voit que son dossier (E03) : c'est une sécurité utile, à contourner de façon ciblée (<code>--add-dir</code>) plutôt qu'en coupant les protections.</li>
+<li>Les plugins se limitent au dossier où ils servent (E06), ce qui ménage le quota Pro.</li>
+</ul></body></html>
