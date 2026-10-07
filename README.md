@@ -1,6 +1,6 @@
 # GET409 — Kaaynioujangat Trading Bot
 
-![Cours](https://img.shields.io/badge/cours-GET%20409-1565C0) ![Projet](https://img.shields.io/badge/projet-KaayNioujangat-7af2a2?labelColor=0f1418) ![Atelier](https://img.shields.io/badge/atelier%20Claude%20Code-E00→E06-f2c06b?labelColor=0f1418) ![Statut](https://img.shields.io/badge/statut-en%20cours-F7931A)
+![Cours](https://img.shields.io/badge/cours-GET%20409-1565C0) ![Projet](https://img.shields.io/badge/projet-KaayNioujangat-7af2a2?labelColor=0f1418) ![Atelier](https://img.shields.io/badge/atelier%20Claude%20Code-E00→E09-f2c06b?labelColor=0f1418) ![Statut](https://img.shields.io/badge/statut-en%20cours-F7931A)
 
 **Cours :** GET 409 — Design Thinking & IA | Swiss UMEF University, Campus de Dakar | S3
 **Enseignant :** M. Malick Faye Diagne
@@ -151,7 +151,7 @@ Une publicité de ~1 minute pour KaayNioujangat, produite avec Google Flow à pa
 
 **Tout a été réellement exécuté** sur ma machine avec **Claude Code 2.1.292** (plan Pro), dans des dossiers de labo. Les captures du terminal sont de vraies captures de fenêtres, celles du site viennent de Chrome : **aucun écran n'est reconstitué**.
 
-📄 **Document de rendu (PDF, 23 pages) :** [`docs/atelier-claude/atelier-claude-kaaynioujangat.pdf`](docs/atelier-claude/atelier-claude-kaaynioujangat.pdf)
+📄 **Document de rendu (PDF, 31 pages) :** [`docs/atelier-claude/atelier-claude-kaaynioujangat.pdf`](docs/atelier-claude/atelier-claude-kaaynioujangat.pdf)
 📝 Source en Markdown : [`docs/atelier-claude/atelier-claude-kaaynioujangat.md`](docs/atelier-claude/atelier-claude-kaaynioujangat.md) · 📁 Fichiers produits : [`docs/atelier-claude/exercices/`](docs/atelier-claude/exercices/)
 
 ### Ce que j'ai eu à faire
@@ -165,6 +165,9 @@ Une publicité de ~1 minute pour KaayNioujangat, produite avec Google Flow à pa
 | **E04** | `/init` et `CLAUDE.md` | 20 lignes générées → **39 lignes** propres au projet |
 | **E05** | Skill de marque `/kaay-brand` | Email, post LinkedIn et flyer A4 avec la même voix |
 | **E06** | Plugins Playwright et marketing | 2 concurrents analysés, 4 captures pleine page, plan marketing sourcé |
+| **E07** | `CLAUDE.md` de ma vraie application (TanStack Start + Dify) | **73 lignes**, 2 incohérences repérées par Claude, coût mesuré : 2,7 k tokens (0,3 %) |
+| **E08** | Protections avant la clé, puis bouton « Copier le résumé » | `.env` ignoré et invisible pour Claude ; bouton testé avec les vrais prix |
+| **E09** | Backend de l'agent sans clé dans le navigateur | Route qui garde la connexion ouverte ; **0 clé dans `dist/`** ; testée contre un faux Dify |
 
 ### E00 — Installation vérifiée
 
@@ -261,9 +264,45 @@ Playwright (navigateur piloté par Claude) a visité deux sites publics françai
 
 **Constats de l'analyse :** aucun des deux sites ne s'adresse au Sénégal (ni FCFA ni mobile money), tous deux placent une offre partenaire avant l'actualité, aucun prix visible. **Cinq recommandations** : résumé quotidien comme action principale · assumer l'angle ouest-africain · résumés courts et datés · rester non commercial et indépendant · page légère à une seule action.
 
+### E07 — `CLAUDE.md` de l'application réelle
+
+Les épisodes E07 à E09 de l'atelier construisent un projet fictif (PromptLens). **Je les ai appliqués à ma vraie application** (celle déployée sur Netlify, voir [Application en ligne](#-application-en-ligne)), dans une copie de labo sans son `CLAUDE.md` ni ses protections, pour que Claude les recrée. En mode plan, Claude a relevé deux choses que je n'avais pas demandées : des prix codés en dur dans `signaux.ts`, et un `.env.example` cité mais absent. Il a ensuite écrit un `CLAUDE.md` de **73 lignes**.
+
+<table>
+<tr>
+<td width="50%"><img src="docs/atelier-claude/img/e07-plan.png" alt="Plan E07"><br><sub>Le plan de Claude (extrait)</sub></td>
+<td width="50%"><img src="docs/atelier-claude/img/e07-context.png" alt="/context"><br><sub><code>/context</code> : fichiers mémoire = 2,7 k tokens (0,3 %)</sub></td>
+</tr>
+</table>
+
+### E08 — Protéger les clés avant tout, puis un bouton « Copier »
+
+Claude a créé `.gitignore` et `.env.example` (clé **vide**). **Il a refusé d'écrire `.claude/settings.json`**, même avec une autorisation ciblée : Claude Code ne modifie pas ses propres protections sans accord. Je n'ai pas contourné ce refus ; ce fichier a été écrit directement sur le disque. Test avec une **fausse** clé : `.env` est ignoré par git et Claude répond qu'il n'existe pas, sans en révéler le contenu. Puis plan et construction d'un bouton « Copier le résumé du jour » : typecheck et build passent, testé dans Chrome avec les vrais prix.
+
+<table>
+<tr>
+<td width="50%"><img src="docs/atelier-claude/img/e08-deny-env.png" alt="Test .env"><br><sub>Fausse clé dans <code>.env</code> : ignorée par git, invisible pour Claude</sub></td>
+<td width="50%"><img src="docs/atelier-claude/img/e08-bouton-copier.png" alt="Bouton Copier"><br><sub>Le bouton « Copié », avec les vrais prix</sub></td>
+</tr>
+</table>
+
+### E09 — Un backend où la clé n'atteint jamais le navigateur
+
+Mon agent expire en production : le workflow Dify met 15 à 48 s et Netlify coupe à ~30 s. J'ai donc remplacé le sujet de l'atelier (Gemini, Firebase) par celui-ci : une route `POST /api/offres-agent` qui envoie un espace toutes les 5 s pour garder la connexion ouverte. Context7 installé en portée locale, mais **non consultable en mode non interactif** (OAuth) : Claude l'a dit et s'est appuyé sur les types de `node_modules`. Preuve : après build, la **valeur** de la clé est absente de `dist/` et son **nom** n'apparaît que côté serveur. Testée contre un faux Dify local (réponse en 42 s, sans coupure) ; pas encore contre le vrai Dify ni déployée.
+
+<table>
+<tr>
+<td width="50%"><img src="docs/atelier-claude/img/e09-plan.png" alt="Plan E09"><br><sub>Le plan de Claude : route en flux, annulation, clé côté serveur</sub></td>
+<td width="50%"><img src="docs/atelier-claude/img/e09-dist-sans-cle.png" alt="dist sans clé"><br><sub>Après build : 0 clé dans <code>dist/</code></sub></td>
+</tr>
+</table>
+
+Fichiers produits : [`docs/atelier-claude/exercices/07-09-app/`](docs/atelier-claude/exercices/07-09-app/) (CLAUDE.md, protections, prompts, code).
+
 ### 🧾 Limites assumées
 
-- Parcours **Essentiel E00 → E06** ; E07 à E14 (PromptLens, boucle Ralph, agents) non traités.
+- Parcours **E00 → E09** ; E10 à E14 (boucle Ralph, agents) non traités. E07 à E09 transposés à ma vraie application plutôt qu'à PromptLens.
+- E07 à E09 : Context7 non consultable (OAuth, mode non interactif) ; `.claude/settings.json` écrit sur le disque, Claude refusant de modifier ses propres protections ; route de l'agent testée contre un **faux** Dify, pas encore contre le vrai ni déployée.
 - Exercices lancés en mode non interactif (`claude -p`) sauf `/usage` ; `/rewind`, `/status` et `/model opusplan` non faits.
 - La skill `/kaay-brand` a été écrite directement (le jeu de questions-réponses de l'atelier exige une session interactive).
 - Le plan marketing n'utilise aucune donnée de trafic (connecteurs SimilarWeb/Ahrefs non autorisés) ; le cadre légal sénégalais reste à vérifier.
@@ -277,7 +316,7 @@ Playwright (navigateur piloté par Claude) a visité deux sites publics françai
 - **Séance 3 :** Architecture multi-agents avec Dify — Workflow Chercheur → Rédacteur, Journal de Prompts S3, Réflexion éthique.
 - **Séance 4 :** MVP no-code avec Lovable — prompt d'initialisation adapté au projet, 4 pages, publication lovable.app.
 - **Séance 5 :** Page HTML KaayNioujangat (prix FCFA en direct, 5 vues, thème clair/sombre) et publicité Google Flow (9 scènes + vidéo).
-- **Atelier Claude Code :** épisodes E00 à E06 réalisés et documentés (voir ci-dessus).
+- **Atelier Claude Code :** épisodes E00 à E09 réalisés et documentés (voir ci-dessus).
 - **Mise en ligne :** application complète sur Netlify, avec agent Dify branché par fonction serveur (voir [Application en ligne](#-application-en-ligne)).
 - **Suite prévue :** raccourcir le workflow Dify, puis RAG (base de connaissances), pas encore réalisé.
 
@@ -286,12 +325,14 @@ Playwright (navigateur piloté par Claude) a visité deux sites publics françai
 ```
 .
 ├── README.md
+├── index.html                               # redirige vers la page HTML (GitHub Pages)
 ├── kaaynioujangat-html.html                 # page HTML (livrable S5)
 ├── docs/
 │   ├── HMW.md · vpc.md · chapeaux-bono.md · carte_empathie.pdf · fiche_equipe.pdf
 │   ├── journal-prompts.md · journal-prompts-s3.md · dify-prompts-s3.md
 │   ├── reflexion-ethique-s3.md
 │   ├── lovable-prompt-s4.md / .pdf
+│   ├── en-ligne/                            # captures de l'application Netlify
 │   ├── GoogleFlow/
 │   │   ├── plan-publicite-kaaynioujangat.md
 │   │   ├── scenes-flow-pas-a-pas.md
@@ -299,7 +340,7 @@ Playwright (navigateur piloté par Claude) a visité deux sites publics françai
 │   └── atelier-claude/
 │       ├── atelier-claude-kaaynioujangat.pdf / .md   # document de rendu
 │       ├── img/                                      # captures réelles
-│       ├── exercices/                                # fichiers produits (E02 à E06)
+│       ├── exercices/                                # fichiers produits (E02 à E09, dont 07-09-app/)
 │       ├── kaay-brand/SKILL.md                       # skill de marque
 │       ├── source/                                   # énoncé de l'atelier
 │       └── build.mjs                                 # régénère le PDF
