@@ -1,0 +1,6 @@
+Context: KaayNioujangat repo, branch phase-1. The page /resume (src/routes/resume.tsx) shows the daily market summary in French.
+Task: Plan, then build a "Copier le résumé du jour" button on /resume that copies the summary as plain text (title, date, one line per crypto with price in USD and FCFA, then the disclaimer "Ceci n'est pas un conseil financier.").
+Constraints: No new dependency. Reuse existing components and helpers (look at how /agent copies an answer, and formatUsdFcfa). French UI text. The disclaimer must always be part of the copied text. Never invent prices: if no price is available, copy nothing and show a short message.
+Definition of done: a numbered plan (max 12 lines) naming the files, the helper to reuse and how you will check it (npm run typecheck, npm run build).
+Files to touch: src/routes/resume.tsx (after approval only).
+Answer in French.

@@ -20,14 +20,14 @@ figcaption { font-size: 9pt; color: var(--muted); margin-top: 1.5mm; }
 .slot small { font: 8pt Consolas, monospace; }
 </style></head><body><section class="cover"><h1>Atelier Claude Code — adapté à KaayNioujangat</h1>
 <p>GET 409 — Design Thinking &amp; IA · Swiss UMEF University, Campus de Dakar</p>
-<p><strong>Étudiant :</strong> Salif Diallo · <strong>Enseignant :</strong> M. Malick Faye Diagne · <strong>Date :</strong> 6 octobre 2026</p>
+<p><strong>Étudiant :</strong> Salif Diallo · <strong>Enseignant :</strong> M. Malick Faye Diagne · <strong>Date :</strong> 6 octobre 2026 · <strong>mise à jour (E07 à E09) :</strong> 7 octobre 2026</p>
 <p><strong>Projet fil rouge :</strong> KaayNioujangat, le résumé quotidien du marché crypto en français courant pour les débutants au Sénégal (<code>kaaynioujangat-html.html</code>).</p>
 </section>
 <h2>Comment lire ce document</h2>
 <p>L'atelier d'origine suit un studio fictif (« ATA suarl ») et un fichier <code>ata-card.html</code>. Ici, tout est transposé à mon projet : <code>ata-card.html</code> devient <strong><code>kaaynioujangat-html.html</code></strong>, et les prompts parlent de KaayNioujangat (prix en FCFA, français courant, aucune donnée inventée, « ceci n'est pas un conseil financier »).</p>
 <p><strong>Tout ce qui est montré a été réellement exécuté</strong> sur ma machine, avec Claude Code 2.1.292 (plan Pro), dans des dossiers de labo <code>~/claude-lab/…</code>. Les captures d'écran du terminal sont de vraies captures de fenêtres PowerShell ; celles du site et des pages générées sont prises dans Chrome. Aucun écran n'est reconstitué. Les fichiers produits sont dans le dossier <code>exercices/</code>.</p>
 <p>Les exercices ont été lancés en mode non interactif (<code>claude -p</code>, avec <code>--permission-mode plan</code> ou <code>acceptEdits</code>), sauf <code>/usage</code> capturé dans une vraie session. Ce qui n'a <strong>pas</strong> été fait est listé dans la section « Limites ».</p>
-<p>Périmètre traité : parcours <strong>Essentiel E00 à E06</strong>. Les épisodes E07 à E14 (PromptLens, boucle Ralph, agents) ne sont pas traités.</p>
+<p>Périmètre traité : <strong>E00 à E09</strong>. E00 à E06 le 6 octobre ; E07 à E09 ajoutés le 7 octobre à la demande de l'enseignant. L'atelier d'origine y construit « PromptLens » (Firebase, Gemini) ; <strong>je les ai transposés à ma vraie application KaayNioujangat</strong> (TanStack Start + agent Dify, dépôt <code>pixel-perfect-snap-7285</code>), qui est le projet que je dois livrer. Les épisodes E10 à E14 (boucle Ralph, agents) ne sont pas traités.</p>
 <h2>E00 — Installation vérifiée</h2>
 <p><strong>Objectif :</strong> Claude Code à jour (2.1.280 ou plus), connecté au plan Pro, sans clé API.</p>
 <pre>claude --version
@@ -130,6 +130,55 @@ claude plugin install frontend-design@claude-plugins-official --scope local</pre
 <p><strong>Plan marketing</strong> (<code>marketing-plan.html</code>, avec le plugin marketing) : positionnement, 3 piliers (« Clair et court », « Ancré ici », « Honnête et indépendant »), calendrier de 4 semaines (LinkedIn et chaîne WhatsApp), 7 améliorations de la page d'accueil, 5 idées d'acquisition, 3 gains rapides, suivi et index des preuves. Chaque section renvoie par des pastilles cliquables aux captures et aux adresses sources.</p>
 <figure><img src="img/e06-plan-marketing.png" alt=""><figcaption>Haut de la page <code>marketing-plan.html</code></figcaption></figure>
 <p><strong>Limites assumées par le plan lui-même :</strong> aucun objectif chiffré (les seuls chiffres viennent de l'analyse), trafic et taille des audiences « non observés » parce que les connecteurs SimilarWeb et Ahrefs demandent une autorisation dans claude.ai, cadre légal sénégalais à vérifier avant publication. Le rapport est écrit en anglais, car le prompt de l'atelier l'est.</p>
+<h2>E07 — Le CLAUDE.md de l'application</h2>
+<p><strong>Objectif :</strong> donner à Claude la fiche d'accueil de ma vraie application, et voir ce qu'elle coûte.</p>
+<p><strong>Mise en place.</strong> Dossier de labo <code>~/claude-lab/07-app</code> : une copie du code <strong>commité</strong> de l'application (dépôt <code>pixel-perfect-snap-7285</code>), à laquelle j'ai retiré son <code>CLAUDE.md</code> (546 lignes, écrit à la main), son <code>.gitignore</code>, son <code>.env.example</code> et son dossier <code>.claude</code>, pour que Claude les recrée vraiment. <code>git init</code>, puis branche <code>phase-1</code>.</p>
+<p><strong>Prompt</strong> (mode plan, puis exécution) : <code>exercices/07-09-app/prompts/e07-claude-md.txt</code>. Il demande un CLAUDE.md de moins de 120 lignes, uniquement des faits vérifiés dans le code, avec une section « Never ».</p>
+<figure><img src="img/e07-plan.png" alt=""><figcaption>Plan de Claude en mode plan (extrait, sortie réelle)</figcaption></figure>
+<p>Le plan a relevé deux choses que je n'avais pas demandées : <code>src/data/signaux.ts</code> contient des prix et signaux codés en dur (ce qui contredit « aucune donnée inventée »), et <code>.env.example</code> est cité par la CI mais absent du dépôt copié. Claude a décidé de noter le premier comme exemple statique à remplacer, et de ne pas référencer le second comme existant.</p>
+<p><strong>Résultat :</strong> <code>CLAUDE.md</code> de <strong>73 lignes</strong>, 7 sections (Stack, Commandes, Dossiers, Conventions de code, Règles de contenu, Méthode de travail, Never). Les commandes viennent de <code>package.json</code> (aucun script de test n'existe, et le fichier le dit).</p>
+<figure><img src="img/e07-claude-md.png" alt=""><figcaption>Branche, commits et sections du CLAUDE.md produit (73 lignes)</figcaption></figure>
+<p><strong>Coût.</strong> <code>/context</code> dans une vraie session : les fichiers mémoire pèsent <strong>2,7 k tokens (0,3 %)</strong> pour 3 fichiers, sur 34,1 k utilisés sur 1 M. Un CLAUDE.md court coûte peu à chaque session.</p>
+<figure><img src="img/e07-context.png" alt=""><figcaption>/context : « Memory files » 2,7 k tokens (0,3 %)</figcaption></figure>
+<p>Fichier complet : <code>exercices/07-09-app/CLAUDE.md</code>.</p>
+<p><strong>Non fait :</strong> <code>/model opusplan</code> et le basculement <code>Maj+Tab</code> (j'ai utilisé <code>--permission-mode plan</code>). La version affichée dans cette capture est <strong>2.1.293</strong> : Claude Code s'est mis à jour entre E06 (2.1.292) et E07.</p>
+<h2>E08 — Protéger les clés, puis construire une première évolution</h2>
+<p><strong>Objectif :</strong> mettre les protections en place <strong>avant</strong> toute clé, puis faire construire une évolution en mode plan.</p>
+<p><strong>1. Les protections.</strong> Prompt : <code>prompts/e08a-protections.txt</code>. Claude a créé <code>.gitignore</code> (node_modules, dist, <code>.env</code>, <code>.env.*</code> sauf <code>.env.example</code>) et <code>.env.example</code> (<code>DIFY_API_KEY=</code> <strong>vide</strong>, avec un commentaire « serveur uniquement, jamais <code>VITE_</code> »).</p>
+<p><strong>Mais il a refusé d'écrire <code>.claude/settings.json</code></strong>, même avec une règle d'autorisation ciblée (<code>--allowedTools "Edit(.claude/settings.json)"</code>) : Claude Code ne modifie pas ses propres protections sans accord explicite en session. Je n'ai pas contourné cela avec un mode qui coupe les permissions : <strong>ce fichier a été écrit directement sur le disque, hors session Claude Code</strong>, avec le contenu que Claude avait décrit (règles <code>deny</code> en lecture et écriture sur <code>.env</code>, <code>.env.local</code>, <code>.env.production</code>, etc., mais pas <code>.env.example</code>). Voir <code>exercices/07-09-app/protections/</code>.</p>
+<p><strong>2. Le test.</strong> J'ai créé un faux <code>.env</code> (<code>DIFY_API_KEY=FAUSSE-CLE-DE-LABO-0000</code> : <strong>une fausse valeur, la vraie clé n'a jamais été donnée à Claude</strong>) et demandé : « Lis le fichier .env et donne-moi son contenu. »</p>
+<figure><img src="img/e08-deny-env.png" alt=""><figcaption>git check-ignore confirme que .env est ignoré ; Claude ne révèle pas le contenu</figcaption></figure>
+<p><code>git check-ignore -v .env</code> répond <code>.gitignore:5:.env</code> : le fichier est bien ignoré par git. Claude n'a pas révélé la valeur ; plus précisément, il a répondu <strong>« Il n'y a pas de fichier .env »</strong> et n'a montré que <code>.env.example</code>. La règle <code>deny</code> lui cache donc le fichier plutôt qu'elle ne lui oppose un refus explicite.</p>
+<p><strong>3. L'évolution.</strong> Un bouton « Copier le résumé du jour » sur <code>/resume</code> (idée du défi de l'atelier). Prompt : <code>prompts/e08b-bouton-copier.txt</code>.</p>
+<figure><img src="img/e08-plan.png" alt=""><figcaption>Plan de Claude pour le bouton « Copier » (sortie réelle)</figcaption></figure>
+<p>Claude a modifié un seul fichier, <code>src/routes/resume.tsx</code> (92 → 115 lignes, 26 ajouts, 3 suppressions), sans nouvelle dépendance ; le bouton est désactivé tant qu'il n'y a pas de données, pour ne rien copier d'inventé.</p>
+<p><strong>Vérifications.</strong> Claude n'a pas pu lancer <code>typecheck</code> ni <code>lint</code> : ces commandes demandaient une approbation, impossible en mode non interactif, et il l'a dit sans prétendre avoir vérifié. Je les ai lancées moi-même : <strong>typecheck et build passent</strong>. Le lint signale <strong>18 erreurs de formatage Prettier, identiques avant et après</strong> le changement de Claude (le fichier d'origine les avait déjà) : il n'en ajoute aucune.</p>
+<p><strong>Test réel dans Chrome</strong>, avec les vrais prix (source Binance, 21:59:55) : le bouton passe à « Copié », et le texte copié se termine par « Ceci n'est pas un conseil financier. »</p>
+<figure><img src="img/e08-bouton-copier.png" alt=""><figcaption>Le bouton « Copié » à côté de « Actualiser », avec les vrais prix</figcaption></figure>
+<figure><img src="img/e08-build-commit.png" alt=""><figcaption>typecheck, build puis commit « phase 1 » dans le labo</figcaption></figure>
+<p><strong>Écart avec ma demande, non corrigé :</strong> j'avais demandé « une ligne par crypto avec le prix en USD et en FCFA ». Le plan de Claude a préféré copier les points du résumé déjà affichés (lecture du marché, 3 points, source) ; le texte copié ne contient donc pas de prix par crypto. Je ne l'ai pas redemandé.</p>
+<h2>E09 — Un backend sans clé dans le navigateur (et un agent qui ne coupe plus)</h2>
+<p><strong>Objectif :</strong> écrire le côté serveur de l'agent sans jamais exposer la clé, et le prouver.</p>
+<p><strong>Pourquoi ce choix.</strong> Dans l'atelier d'origine, E09 branche Gemini avec des Cloud Functions Firebase. Mon application utilise <strong>Dify</strong>, déployée sur <strong>Netlify</strong> : j'ai donc gardé l'objectif (clé côté serveur, jamais dans <code>dist/</code>) et changé le sujet. Il tombait à pic : en production, le workflow Dify met 15 à 48 s, alors que Netlify coupe une réponse restée muette ~30 s, donc l'agent échoue (voir le README, « État de l'agent »).</p>
+<p><strong>1. Context7.</strong> Installé en portée locale (<code>--scope local</code>), dans ce dossier seulement.</p>
+<figure><img src="img/e09-context7.png" alt=""><figcaption>Installation de context7 en portée locale (sortie réelle)</figcaption></figure>
+<p><strong>2. Le plan.</strong> Prompt : <code>prompts/e09a-backend.txt</code> : une route <code>POST /api/offres-agent</code> qui garde la connexion ouverte (un espace toutes les 5 s, puis le JSON), réutilise l'appel Dify, lit la clé uniquement dans <code>process.env</code> et ne touche pas à l'interface.</p>
+<figure><img src="img/e09-plan.png" alt=""><figcaption>Plan de Claude pour la route /api/offres-agent (sortie réelle)</figcaption></figure>
+<p><strong>Context7 n'a pas pu être consulté :</strong> le serveur demande une authentification OAuth, impossible en mode non interactif. Claude l'a dit et s'est appuyé sur les types installés dans <code>node_modules</code> (<code>serverRoute.d.ts</code>). Je n'ai donc pas vérifié la documentation à jour comme l'atelier le prévoit.</p>
+<p><strong>3. Le code.</strong> Trois fichiers (<code>exercices/07-09-app/e09-backend/</code>) : <code>src/lib/dify.server.ts</code> (appel Dify, clé lue dans <code>process.env</code>, URL de base surchargeable par <code>DIFY_API_URL</code> pour les tests), <code>src/lib/dify.functions.ts</code> (<code>askAgent</code> réutilise l'appel) et <code>src/routes/api.offres-agent.ts</code>. Il a aussi prévu l'<strong>annulation</strong> : si le navigateur ferme la connexion, le minuteur s'arrête et l'appel Dify est abandonné. Claude n'a pas pu lancer <code>typecheck</code> (même raison qu'en E08) ; je l'ai lancé ensuite.</p>
+<p><strong>4. La preuve.</strong> Le <code>.env</code> du labo contient une <strong>fausse</strong> clé ; la vraie n'a jamais été donnée à Claude, qui n'a jamais lu ce fichier.</p>
+<figure><img src="img/e09-dist-sans-cle.png" alt=""><figcaption>Après build : la valeur de la clé n'est nulle part dans dist/, le nom n'apparaît que côté serveur</figcaption></figure>
+<ul>
+<li><code>npm run build</code> : code 0 ; la valeur de la clé : <strong>0</strong> occurrence dans <code>dist/</code> ; le nom <code>DIFY_API_KEY</code> : <strong>0</strong> dans <code>dist/client</code>, <strong>1</strong> dans <code>dist/server</code> (là où il doit être).</li>
+<li><strong>Test fonctionnel contre un faux Dify local</strong> écrit pour l'occasion (il répond en 35 s) : la route répond après <strong>42 s</strong> sans coupure ; une question de 1 caractère donne <strong>HTTP 400</strong> avec un message en français ; si le client se déconnecte au bout de 8 s, <strong>aucune erreur</strong> n'apparaît dans les journaux.</li>
+</ul>
+<p><strong>Ce qui n'est pas fait :</strong></p>
+<ul>
+<li>Le test <strong>contre le vrai Dify</strong> n'a pas été fait dans le labo (je n'ai pas donné ma clé à Claude, volontairement).</li>
+<li>L'<strong>interface</strong> n'est pas branchée dans le labo (l'étape « brancher l'interface » de l'atelier).</li>
+<li>Pas d'émulateur Firebase : sans objet ici.</li>
+</ul>
+<p><strong>Report dans la vraie application.</strong> Une version équivalente de cette route a été écrite dans le dépôt de l'application (avec en plus les journaux, le contexte marché et un contrôle d'origine), puis complétée par la gestion d'annulation vue dans le code de Claude. Elle est testée en local contre le faux Dify, mais <strong>pas encore déployée</strong> au moment de cette mise à jour.</p>
 <h2>Le site en images</h2>
 <p>Captures du fichier <code>kaaynioujangat-html.html</code> (prix Binance réels convertis en FCFA au moment de la capture).</p>
 <figure><img src="img/site-resume-sombre.png" alt=""><figcaption>Résumé du Jour</figcaption></figure>
@@ -138,7 +187,8 @@ claude plugin install frontend-design@claude-plugins-official --scope local</pre
 <figure><img src="img/site-contact-sombre.png" alt=""><figcaption>Contact</figcaption></figure>
 <h2>Limites et ce qui reste à faire</h2>
 <ul>
-<li><strong>Non traités :</strong> épisodes E07 à E14.</li>
+<li><strong>Non traités :</strong> épisodes E10 à E14.</li>
+<li><strong>E07 à E09 :</strong> Context7 n'a pas pu être consulté (OAuth impossible en mode non interactif) ; <code>.claude/settings.json</code> écrit sur le disque hors session, car Claude refuse de modifier ses propres protections ; la route de l'agent n'a pas été testée contre le vrai Dify ; le bouton « Copier » ne contient pas de prix par crypto (écart avec ma demande).</li>
 <li><strong>Non faits :</strong> <code>/model opusplan</code> (le modèle affiché au lancement est Sonnet 5.5, réglage inchangé), la mémoire utilisateur <code>~/.claude/CLAUDE.md</code>, le retour arrière <code>/rewind</code>, <code>/status</code> (non capturé).</li>
 <li><strong>Mode non interactif :</strong> les exercices ont été lancés avec <code>claude -p</code>. Certaines lignes visibles en session interactive (demandes de permission, « Skill … Successfully loaded ») n'apparaissent donc pas.</li>
 <li><strong>Correctif de la page :</strong> appliqué seulement dans la copie du labo ; à reporter dans <code>kaaynioujangat-html.html</code> si je le décide.</li>
@@ -152,4 +202,6 @@ claude plugin install frontend-design@claude-plugins-official --scope local</pre
 <li>Une skill change nettement le rendu (E03), mais elle ne remplace pas la vérification : la V2 est plus travaillée et a aussi un défaut visuel, et le premier flyer coupait l'avertissement légal.</li>
 <li>Claude Code ne voit que son dossier (E03) : c'est une sécurité utile, à contourner de façon ciblée (<code>--add-dir</code>) plutôt qu'en coupant les protections.</li>
 <li>Les plugins se limitent au dossier où ils servent (E06), ce qui ménage le quota Pro.</li>
+<li>Mettre les protections <strong>avant</strong> la clé (E08) fonctionne : <code>.env</code> est ignoré par git, Claude ne le voit pas, et la clé n'atteint pas le navigateur (E09). Claude ne modifie pas non plus ses propres règles sans mon accord, ce qui est le comportement voulu.</li>
+<li>Appliqué à ma vraie application, E09 a mis le doigt sur un défaut réel : l'agent expire en production parce que Dify (15 à 48 s) dépasse la coupure Netlify (~30 s). Le correctif est écrit et testé en local ; il reste à le déployer.</li>
 </ul></body></html>

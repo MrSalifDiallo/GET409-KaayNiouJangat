@@ -1,0 +1,6 @@
+Context: KaayNioujangat repo (TanStack Start). Only CLAUDE.md and the source exist; there is no .gitignore, no .env.example, no .claude/ folder. The Dify agent key DIFY_API_KEY will live in a .env file.
+Task: Create `.gitignore`, `.env.example` and `.claude/settings.json`. The .gitignore must keep out node_modules, dist, .netlify, .env and every .env.* except .env.example. `.env.example` lists DIFY_API_KEY with an EMPTY value and a comment saying it is read on the server only and must never be prefixed with VITE_. `.claude/settings.json` must deny Read and Edit on .env and .env.* (but not .env.example).
+Constraints: Do not build anything else. Do not read or create a real .env.
+Definition of done: three files created, no secret value anywhere.
+Files to touch: `.gitignore`, `.env.example`, `.claude/settings.json`.
+Answer in French in two lines.

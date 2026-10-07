@@ -1,0 +1,6 @@
+Context: New repo "KaayNioujangat" (TanStack Start app, French crypto-market site for beginners in Senegal, prices in USD and FCFA, an AI agent page /agent backed by a Dify workflow). There is no CLAUDE.md yet. Read package.json, vite.config.ts, netlify.toml and the files in src/ first.
+Task: Plan, then (after approval) write CLAUDE.md for this repo: project purpose, stack, commands, folders, conventions, rules for content (French, no invented data, never financial advice, always show the disclaimer), working method, and a Never list.
+Constraints: Under 120 lines. Only facts you verified in the code. Never ask to store API keys in the repo, never call Dify from the browser. No task list, no changelog.
+Definition of done: A plan listing the sections and what each will contain, with the exact commands you found in package.json.
+Files to touch: CLAUDE.md only (after plan approval).
+Answer in French, concisely (max 25 lines).
