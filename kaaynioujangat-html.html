@@ -575,7 +575,7 @@
                 <textarea id="offers-question" rows="5" maxlength="600" placeholder="Posez votre question sur les prix et disponibilités..."></textarea>
                 <button class="btn primary" type="submit">Demander à l’agent 🌿</button>
               </form>
-              <p class="note" id="offers-result">L’endpoint attendu est /api/offres-agent (POST JSON: { question }).</p>
+              <p class="note" id="offers-result">Ici, la page appelle POST /api/offres-agent. L’agent complet (Dify) est en ligne sur l’application Netlify.</p>
             </article>
           </section>
 
@@ -800,7 +800,7 @@
           result.textContent = "L’agent réfléchit…";
 
           try {
-            const response = await fetch("/api/offres-agent", {
+            const response = await fetch(AGENT_ENDPOINT, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ question }),
@@ -809,11 +809,17 @@
             const data = await response.json();
             result.textContent = data && data.answer ? data.answer : "Réponse vide de l’agent.";
           } catch {
-            result.textContent =
-              "Endpoint /api/offres-agent indisponible. Branche ton backend pour utiliser l’agent IA sans exposer de clé API côté client.";
+            // Page ouverte hors du site complet (fichier local, GitHub Pages) : pas de serveur ici, la clé Dify reste côté serveur.
+            result.innerHTML =
+              'Cette page statique n’a pas de serveur. L’agent IA fonctionne sur l’application complète : <a href="' + APP_URL + '/agent" target="_blank" rel="noopener">ouvrir l’agent en ligne</a>.';
           }
         });
       }
+
+      // Application complète (TanStack Start + fonction serveur Dify) : voir README, section « Application en ligne ».
+      const APP_URL = "https://kaaynioujang.netlify.app";
+      // Même origine : sert l’agent quand cette page est hébergée avec la fonction ; sinon le repli ci-dessus s’affiche.
+      const AGENT_ENDPOINT = "/api/offres-agent";
 
       async function loadLiveMarket() {
         try {
