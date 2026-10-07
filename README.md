@@ -12,7 +12,7 @@
 
 - [Pitch du projet](#-pitch-du-projet) · [HMW](#-hmw-définitif-séance-2) · [Empathie](#-carte-dempathie) · [VPC](#-value-proposition-canvas-séance-2) · [Journaux de prompts](#-journal-de-prompts-séance-2)
 - [Agent Dify (S3)](#-agent-dify--workflow-chercheur--rédacteur-séance-3) · [MVP Lovable (S4)](#-mvp-lovable-séance-4)
-- [🌐 Page HTML KaayNioujangat (S5)](#-page-html-kaaynioujangat-s5) · [🎬 Publicité Google Flow (S5)](#-publicité-google-flow-s5)
+- [🌍 **Application en ligne**](#-application-en-ligne) · [🌐 Page HTML KaayNioujangat (S5)](#-page-html-kaaynioujangat-s5) · [🎬 Publicité Google Flow (S5)](#-publicité-google-flow-s5)
 - [🧪 **Atelier Claude Code adapté à KaayNioujangat**](#-atelier-claude-code-adapté-à-kaaynioujangat) — exercices réels et captures
 - [Roadmap](#-roadmap-séances) · [Structure du dépôt](#-structure-du-dépôt)
 
@@ -45,9 +45,10 @@ Voir [`docs/journal-prompts.md`](docs/journal-prompts.md) — 5 prompts document
 ## 🤖 Agent Dify — Workflow Chercheur → Rédacteur (Séance 3)
 
 - **Agent V1 (L1) :** `KaaynioujangatBot_ResumeCrypto_v1` sur Dify — Workflow Chercheur → Si/Sinon → Rédacteur.
-  URL publique : _[à compléter — coller le lien de publication Dify]_
+  **URL publique :** <https://udify.app/workflow/ZfCEYQQwYDgyANXg> · point de terminaison API : `https://api.dify.ai/v1`
+  Journal d'exécutions Dify (7 derniers jours) : appels réels du site, tous en succès, entre 15 et 48 s.
   Captures test entrée/sortie : _[à ajouter dans `docs/` — 2 captures, une par branche testée]_
-- **Schéma d'architecture (L2) :** _[à ajouter — capture annotée du workflow Dify complet]_
+- **Schéma d'architecture (L2) :** chaîne `DÉBUT (query, market_context) → CHERCHEUR → BINANCE → ANALYSTE → SI/SINON → RÉDACTEUR → SORTIE` ; capture annotée du canvas Dify : _[à ajouter]_
 - Prompts système remplis (Chercheur + Rédacteur) : [`docs/dify-prompts-s3.md`](docs/dify-prompts-s3.md)
 - **Journal de Prompts S3 (L3) :** [`docs/journal-prompts-s3.md`](docs/journal-prompts-s3.md) — 4 prompts documentés (Zero-Shot, Zero-Shot structuré, Few-Shot, Chain-of-Thought)
 - **Réflexion éthique (L4) :** [`docs/reflexion-ethique-s3.md`](docs/reflexion-ethique-s3.md) — 2 risques spécifiques au projet (sur-confiance dans le score IA, dépendance à l'infrastructure) + garde-fous
@@ -71,7 +72,40 @@ Voir [`docs/fiche_equipe.pdf`](docs/fiche_equipe.pdf).
 
 - **Prompt d'initialisation complété** pour lovable.dev (4 pages : Accueil / Résumé du Jour / Signaux du Jour / Contact, recherche + tri + filtres BULL/BEAR/NEUTRAL, section mobile dédiée, design bleu fintech #1565C0 + orange Bitcoin #F7931A, 6 données réalistes, **no AI slot**) : [`docs/lovable-prompt-s4.md`](docs/lovable-prompt-s4.md) — version PDF : [`docs/lovable-prompt-s4.pdf`](docs/lovable-prompt-s4.pdf)
 - Wireframes ASCII de l'interface mobile (375px) + 5 prompts d'itération pré-rédigés (correction / visuelle / fonctionnelle ×2 / libre) pour le journal L3
-- URL lovable.app : _[à noter après publication — livrable L1]_
+- URL lovable.app : _non publiée_ — le MVP a ensuite été repris en code (TanStack Start) et déployé sur Netlify, voir [Application en ligne](#-application-en-ligne).
+
+---
+
+## 🌍 Application en ligne
+
+| | Lien |
+|---|---|
+| **Application complète** (accueil, signaux, résumé, détail par crypto, contact) | <https://kaaynioujang.netlify.app> |
+| **Agent IA** (workflow Dify) | <https://kaaynioujang.netlify.app/agent> |
+| Page HTML statique S5 (GitHub Pages) | <https://mrsalifdiallo.github.io/GET409-KaayNiouJangat/> |
+| Code de l'application complète | dépôt GitLab `iamldata-science/frontend/kaaynioujangat` (TanStack Start, déployé sur Netlify par GitLab CI) |
+
+**Deux livrables, un seul produit.** La page [`kaaynioujangat-html.html`](kaaynioujangat-html.html) est le prototype en un seul fichier (S5). L'application Netlify est sa version complète : mêmes vues, mêmes règles (prix en FCFA, « pas un conseil financier »), avec en plus un serveur. C'est ce serveur qui manque à la page HTML : une page statique ne peut pas appeler Dify sans exposer la clé API.
+
+```
+Navigateur (/agent)  →  /api/offres-agent (fonction serveur Netlify)  →  Dify workflows/run
+                         lit DIFY_API_KEY dans l'environnement Netlify       (CHERCHEUR → BINANCE → ANALYSTE → RÉDACTEUR)
+                         jamais envoyée au navigateur
+```
+
+<table>
+<tr>
+<td width="50%"><img src="docs/en-ligne/netlify-accueil.png" alt="Application Netlify, accueil"><br><sub>Accueil, en ligne sur Netlify</sub></td>
+<td width="50%"><img src="docs/en-ligne/netlify-signaux.png" alt="Application Netlify, signaux"><br><sub>Signaux du Jour : « Prix réels · source CoinGecko » (Binance est parfois bloqué depuis Netlify, le repli prend le relais)</sub></td>
+</tr>
+</table>
+
+### État de l'agent (relevé le 2026-10-07)
+
+- L'agent est branché par une **fonction serveur** (`src/lib/dify.functions.ts` dans le dépôt de l'application) : la clé `DIFY_API_KEY` n'existe que dans l'environnement Netlify.
+- **Problème mesuré :** le workflow Dify met entre 15 et 48 s. Netlify coupe une réponse restée muette ~30 s : l'appel échoue alors que Dify, lui, termine en succès (voir son journal). Capture du 504 : [`docs/en-ligne/netlify-agent-avant-correctif-504.png`](docs/en-ligne/netlify-agent-avant-correctif-504.png).
+- **Correctif écrit et testé en local le 2026-10-07 :** une route `/api/offres-agent` qui envoie un octet toutes les 5 s pendant l'attente, donc la connexion reste ouverte. Testée contre un faux Dify local qui répond en 40 s : réponse reçue après 40,8 s, sans coupure. **Elle n'est pas encore déployée** et n'a pas encore été testée contre le vrai Dify.
+- À faire ensuite : raccourcir le workflow Dify (modèle plus rapide sur le nœud ANALYSTE).
 
 ---
 
@@ -83,7 +117,7 @@ Fichier unique, sans framework : [`kaaynioujangat-html.html`](kaaynioujangat-htm
 - **Thème clair / sombre** (suit le système, choix mémorisé dans le navigateur)
 - **Prix réels** : Binance 24 h convertis en **FCFA** (taux USD→XOF d'open.er-api.com), avec repli sur des données de démonstration signalées si l'API est indisponible
 - **Signaux** BULL / BEAR / NEUTRAL avec recherche, filtre et tri par prix
-- **Offres :** formulaire « consulter l'agent » qui appelle `POST /api/offres-agent` (aucune clé API dans la page)
+- **Offres :** formulaire « consulter l'agent » qui appelle `POST /api/offres-agent` (aucune clé API dans la page). Hors de l'application complète (fichier local, GitHub Pages), il n'y a pas de serveur : la page affiche alors un lien vers l'agent en ligne.
 - Rappel permanent : _« Ceci n'est pas un conseil financier »_
 
 <table>
@@ -244,7 +278,8 @@ Playwright (navigateur piloté par Claude) a visité deux sites publics françai
 - **Séance 4 :** MVP no-code avec Lovable — prompt d'initialisation adapté au projet, 4 pages, publication lovable.app.
 - **Séance 5 :** Page HTML KaayNioujangat (prix FCFA en direct, 5 vues, thème clair/sombre) et publicité Google Flow (9 scènes + vidéo).
 - **Atelier Claude Code :** épisodes E00 à E06 réalisés et documentés (voir ci-dessus).
-- **Suite prévue :** intégration MVP ↔ agent Dify + RAG (base de connaissances), pas encore réalisée.
+- **Mise en ligne :** application complète sur Netlify, avec agent Dify branché par fonction serveur (voir [Application en ligne](#-application-en-ligne)).
+- **Suite prévue :** raccourcir le workflow Dify, puis RAG (base de connaissances), pas encore réalisé.
 
 ## 📂 Structure du dépôt
 
